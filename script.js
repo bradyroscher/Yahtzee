@@ -62,10 +62,10 @@ const nextTurn = () => {
   // }
   // alert('No combo has been chosen.')
 }
-const confirm0 = (func) => {
+const confirm0 = (func, tf) => {
   if (confirm(`This will add 0 to the score, is that ok?`)) {
     nextTurn()
-    return
+    return 'added 0'
   } else {
     return
   }
@@ -209,7 +209,11 @@ document.querySelector('#ones').addEventListener('click', () => {
       console.log(score)
       onesChosen = true
     } else {
-      confirm0(checkOnes(chosenDice))
+      if (confirm0(checkOnes(chosenDice) === 'added 0')) {
+        onesChosen = true
+      } else {
+        return
+      }
     }
   } else {
     alert('Combo already chose, choose another!')
@@ -222,52 +226,92 @@ document.querySelector('#twos').addEventListener('click', () => {
       scoreDisplay.innerHTML = currentScore
       nextTurn()
       console.log(score)
+      twosChosen = true
     } else {
-      confirm0(checkTwos(chosenDice))
+      if (confirm0(checkTwos(chosenDice) === 'added 0')) {
+        twosChosen = true
+      } else {
+        return
+      }
     }
   } else {
     alert('Combo already chose, choose another!')
   }
 })
 document.querySelector('#threes').addEventListener('click', () => {
-  if (checkThrees(chosenDice) !== 0) {
-    currentScore += checkThrees(chosenDice)
-    scoreDisplay.innerHTML = currentScore
-    nextTurn()
-    console.log(score)
+  if (threesChosen === false) {
+    if (checkThrees(chosenDice) !== 0) {
+      currentScore += checkThrees(chosenDice)
+      scoreDisplay.innerHTML = currentScore
+      nextTurn()
+      console.log(score)
+      threesChosen = true
+    } else {
+      if (confirm0(checkThrees(chosenDice) === 'added 0')) {
+        threesChosen = true
+      } else {
+        return
+      }
+    }
   } else {
-    confirm0c(checkTwos(chosenDice))
+    alert('Combo already chose, choose another!')
   }
 })
 document.querySelector('#fours').addEventListener('click', () => {
-  if (checkFours(chosenDice) !== 0) {
-    currentScore += checkFours(chosenDice)
-    scoreDisplay.innerHTML = currentScore
-    nextTurn()
-    console.log(score)
+  if (foursChosen === false) {
+    if (checkFours(chosenDice) !== 0) {
+      currentScore += checkFours(chosenDice)
+      scoreDisplay.innerHTML = currentScore
+      nextTurn()
+      console.log(score)
+      foursChosen = true
+    } else {
+      if (confirm0(checkFours(chosenDice) === 'added 0')) {
+        foursChosen = true
+      } else {
+        return
+      }
+    }
   } else {
-    confirm0(checkFours(chosenDice))
+    alert('Combo already chose, choose another!')
   }
 })
 document.querySelector('#fives').addEventListener('click', () => {
-  if (checkFives(chosenDice) !== 0) {
-    currentScore += checkFives(chosenDice)
-    scoreDisplay.innerHTML = currentScore
-    nextTurn()
-    console.log(score)
+  if (fivesChosen === false) {
+    if (checkFives(chosenDice) !== 0) {
+      currentScore += checkFives(chosenDice)
+      scoreDisplay.innerHTML = currentScore
+      nextTurn()
+      fivesChosen = true
+    } else {
+      if (confirm0(checkFives(chosenDice) === 'added 0')) {
+        fivesChosen = true
+      } else {
+        return
+      }
+    }
   } else {
-    confirm0(checkFives(chosenDice))
+    alert('Combo already chose, choose another!')
   }
 })
 
 document.querySelector('#sixes').addEventListener('click', () => {
-  if (checkSixes(chosenDice) !== 0) {
-    currentScore += checkSixes(chosenDice)
-    scoreDisplay.innerHTML = currentScore
-    nextTurn()
-    console.log(score)
+  if (sixesChosen === false) {
+    if (checkSixes(chosenDice) !== 0) {
+      currentScore += checkSixes(chosenDice)
+      scoreDisplay.innerHTML = currentScore
+      nextTurn()
+      console.log(score)
+      sixesChosen = true
+    } else {
+      if (confirm0(checkFives(chosenDice) === 'added 0')) {
+        sixesChosen = true
+      } else {
+        return
+      }
+    }
   } else {
-    confirm0(checkFives(chosenDice))
+    alert('Combo already chose, choose another!')
   }
 })
 document.querySelector('#three-of-kind').addEventListener('click', () => {
