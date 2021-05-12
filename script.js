@@ -224,6 +224,7 @@ document.querySelector('#ones').addEventListener('click', () => {
     } else {
       if (confirm0(checkOnes(chosenDice)) === 'added 0') {
         onesChosen = true
+        document.querySelector('#ones').style.color = 'orange'
       } else {
         return
       }
@@ -248,6 +249,7 @@ document.querySelector('#twos').addEventListener('click', () => {
     } else {
       if (confirm0(checkTwos(chosenDice) === 'added 0')) {
         twosChosen = true
+        document.querySelector('#twos').style.color = 'orange'
       } else {
         return
       }
@@ -272,6 +274,7 @@ document.querySelector('#threes').addEventListener('click', () => {
     } else {
       if (confirm0(checkThrees(chosenDice) === 'added 0')) {
         threesChosen = true
+        document.querySelector('#threes').style.color = 'orange'
       } else {
         return
       }
@@ -296,6 +299,7 @@ document.querySelector('#fours').addEventListener('click', () => {
     } else {
       if (confirm0(checkFours(chosenDice) === 'added 0')) {
         foursChosen = true
+        document.querySelector('#fours').style.color = 'orange'
       } else {
         return
       }
@@ -319,6 +323,7 @@ document.querySelector('#fives').addEventListener('click', () => {
     } else {
       if (confirm0(checkFives(chosenDice) === 'added 0')) {
         fivesChosen = true
+        document.querySelector('#fives').style.color = 'orange'
       } else {
         return
       }
