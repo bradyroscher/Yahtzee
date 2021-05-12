@@ -4,7 +4,8 @@ let diceRolled = []
 let currentScore = 0
 let highScore = 0
 let diceToRoll = 5
-let timesRolled = 0
+let rollCount = 0
+let turnCount = 1
 let comboChosen = false
 let onesChosen = false
 let twosChosen = false
@@ -24,6 +25,8 @@ const scoreDisplay = document.querySelector('#score')
 const twos = document.querySelector('#twos')
 const choiceParent = document.querySelector('#chosen-dice')
 const highScoreDisplay = document.querySelector('#high-score')
+const turnCounter = document.querySelector('#turn-counter')
+const rollCounter = document.querySelector('#roll-counter')
 
 //_____Global variable end
 //Funtions (non combo checking)
@@ -43,7 +46,8 @@ const newGame = () => {
   diceRolled = []
   currentScore = 0
   diceToRoll = 5
-  timesRolled = 0
+  rollCount = 0
+  turnCount = 1
   comboChosen = false
   onesChosen = false
   twosChosen = false
@@ -74,12 +78,15 @@ const newGame = () => {
   scoreDisplay.innerHTML = 'Current Score: 0'
   gameBoard.innerHTML = ''
   choiceParent.innerHTML = ''
+  turnCounter.innerHTML = 'Turn: 1'
+  rollCounter.innerHTML = 'Roll Count: 0'
 }
 const rollDice = () => {
-  if (timesRolled < 3) {
+  if (rollCount < 3) {
     diceRolled = []
     gameBoard.innerHTML = ''
-    timesRolled++
+    rollCount++
+    rollCounter.innerHTML = `Roll Count: ${rollCount}`
     for (i = 0; i < diceToRoll; i++) {
       let die = Math.ceil(Math.random() * 6)
       diceRolled.push(die)
@@ -106,9 +113,12 @@ const nextTurn = () => {
   diceToRoll = 5
   chosenDice = []
   dice = []
-  timesRolled = 0
+  rollCount = 0
+  turnCount++
   gameBoard.innerHTML = ''
   choiceParent.innerHTML = ''
+  rollCounter.innerHTML = 'Roll Count: 0'
+  turnCounter.innerHTML = `Turn: ${turnCount}`
   // }
   // alert('No combo has been chosen.')
 }
@@ -193,15 +203,12 @@ const check4OfAKind = (arr) => {
 const checkFullHouse = (arr) => {
   let sortedArr = arr.sort()
   if (
-    sortedArr[0] === sortedArr[1] &&
-    sortedArr[2] === sortedArr[3] &&
-    sortedArr[2] === sortedArr[4]
-  ) {
-    return 25
-  } else if (
-    sortedArr[0] === sortedArr[1] &&
-    sortedArr[0] === sortedArr[2] &&
-    sortedArr[3] === sortedArr[4]
+    (sortedArr[0] === sortedArr[1] &&
+      sortedArr[2] === sortedArr[3] &&
+      sortedArr[2] === sortedArr[4]) ||
+    (sortedArr[0] === sortedArr[1] &&
+      sortedArr[0] === sortedArr[2] &&
+      sortedArr[3] === sortedArr[4])
   ) {
     return 25
   }
@@ -212,9 +219,12 @@ const checkSmallStraight = (arr) => {
   let sortedArr = trimedDice.sort()
   console.log(sortedArr)
   if (
-    sortedArr[0] === sortedArr[1] - 1 &&
-    sortedArr[0] === sortedArr[2] - 2 &&
-    sortedArr[0] === sortedArr[3] - 3
+    (sortedArr[0] === sortedArr[1] - 1 &&
+      sortedArr[0] === sortedArr[2] - 2 &&
+      sortedArr[0] === sortedArr[3] - 3) ||
+    (sortedArr[1] === sortedArr[2] - 1 &&
+      sortedArr[1] === sortedArr[3] - 2 &&
+      sortedArr[1] === sortedArr[4] - 3)
   ) {
     return 30
   }

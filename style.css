@@ -1,3 +1,6 @@
+body {
+  font-family: 'Rubik Mono One', sans-serif;
+}
 header {
   background-color: aqua;
   height: 10vh;
@@ -10,6 +13,7 @@ header {
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
+  font-size: 25px;
 }
 main {
   height: 90vh;
@@ -18,7 +22,7 @@ main {
 }
 #combos {
   height: 101%;
-  width: 12%;
+  width: 15%;
   background-color: orange;
   display: flex;
   flex-direction: column;
@@ -62,13 +66,14 @@ main {
   justify-content: center;
 }
 .combo {
+  font-size: 14px;
   cursor: pointer;
-  border: 1px solid black;
+  border: 3px solid black;
   text-align: center;
   height: 20px;
   vertical-align: center;
   margin: auto;
-  width: 110px;
+  width: 180px;
   padding: 10px;
   border-radius: 15px;
   background-color: orange;
@@ -112,8 +117,16 @@ main {
 #roll {
   cursor: pointer;
   display: flex;
-  width: 50px;
-  height: 20px;
+  width: 119px;
+  height: 40px;
+  font-size: 30px;
+  font-family: 'Rubik Mono One', sans-serif;
+}
+#new-game {
+  height: 27px;
+  font-size: 17px;
+  font-family: 'Rubik Mono One', sans-serif;
+  margin-bottom: 5px;
 }
 #roll-counter {
   color: white;
