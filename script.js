@@ -23,6 +23,7 @@ const gameBoard = document.querySelector('#board')
 const scoreDisplay = document.querySelector('#score')
 const twos = document.querySelector('#twos')
 const choiceParent = document.querySelector('#chosen-dice')
+const highScoreDisplay = document.querySelector('#high-score')
 
 //_____Global variable end
 //Funtions (non combo checking)
@@ -32,6 +33,47 @@ const sumDice = (arr) => {
     sum += arr[i]
   }
   return sum
+}
+const newGame = () => {
+  if (currentScore > highScore) {
+    highScore = currentScore
+    highScoreDisplay.innerHTML = `High Score: ${highScore}`
+  }
+  chosenDice = []
+  diceRolled = []
+  currentScore = 0
+  diceToRoll = 5
+  timesRolled = 0
+  comboChosen = false
+  onesChosen = false
+  twosChosen = false
+  threesChosen = false
+  foursChosen = false
+  fivesChosen = false
+  sixesChosen = false
+  threeOfAKindChosen = false
+  fourOfAKindChosen = false
+  fullHouseChosen = false
+  smallStraightChosen = false
+  largeStraightChosen = false
+  yahtzeeChosen = false
+  chanceChosen = false
+  document.querySelector('#ones').style.color = 'black'
+  document.querySelector('#twos').style.color = 'black'
+  document.querySelector('#threes').style.color = 'black'
+  document.querySelector('#fours').style.color = 'black'
+  document.querySelector('#fives').style.color = 'black'
+  document.querySelector('#sixes').style.color = 'black'
+  document.querySelector('#three-of-kind').style.color = 'black'
+  document.querySelector('#four-of-kind').style.color = 'black'
+  document.querySelector('#fullhouse').style.color = 'black'
+  document.querySelector('#small-straight').style.color = 'black'
+  document.querySelector('#large-straight').style.color = 'black'
+  document.querySelector('#yahtzee').style.color = 'black'
+  document.querySelector('#chance').style.color = 'black'
+  scoreDisplay.innerHTML = 'Current Score: 0'
+  gameBoard.innerHTML = ''
+  choiceParent.innerHTML = ''
 }
 const rollDice = () => {
   if (timesRolled < 3) {
@@ -526,6 +568,10 @@ document.querySelector('#chance').addEventListener('click', () => {
 })
 document.querySelector('#roll').addEventListener('click', () => {
   rollDice()
+})
+document.querySelector('#new-game').addEventListener('click', () => {
+  newGame()
+  console.log('clicked')
 })
 // document.querySelector('#next').addEventListener('click', ())
 // Event Listeners end
