@@ -9,6 +9,9 @@
 </head>
 <body>
   <header>
+    <div id='score'>Current Score: 0</div>
+    <p2 id='high-score'>0</p2>
+    <button id=new-game>NEW GAME</button>
   </header>
   <main>
     <section id='combos'>
@@ -27,15 +30,22 @@
       <div class='combo' id='chance'>Chance</div>
     </section>
     <section id=section2>
-      <p id=chosen-dice></p>
-      <p id=board></p>
-      <button id=roll>ROLL</button><button id=next>NEXT TURN</button>
+      <section id=info>
+        <div id=chosen-dice></div>
+        <div id=message></div>
+        <div id=counters>
+          <div id=roll-counter>0</div>
+          <div id=turn-counter>0</div>
+        </div>
+      </section>
+      <section id= dice-roller>
+        <p id=board></p>
+        <p id=holder><button id=roll>ROLL</button></p>
+      </section>
     </section>
   </main>
-  <footer>
-    <div id='score'>0</div>
-    <div id='high-score'>0</div>
-  </footer>
+  <!-- <footer>
+  </footer> -->
   <script src='script.js'></script>
 </body>
 </html>

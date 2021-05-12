@@ -42,7 +42,7 @@ const rollDice = () => {
       let die = Math.ceil(Math.random() * 6)
       diceRolled.push(die)
       let diceDiv = document.createElement('div')
-      diceDiv.setAttribute('id', `die${i}`)
+      diceDiv.setAttribute('class', `die`)
       diceDiv.innerHTML = `<img src=images/Dice-${die}.png>`
       gameBoard.appendChild(diceDiv)
       diceDiv.addEventListener('click', () => {
@@ -216,7 +216,7 @@ document.querySelector('#ones').addEventListener('click', () => {
   if (onesChosen === false) {
     if (checkOnes(chosenDice) !== 0) {
       currentScore += checkOnes(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       console.log(score)
       onesChosen = true
@@ -240,7 +240,7 @@ document.querySelector('#twos').addEventListener('click', () => {
   if (twosChosen === false) {
     if (checkTwos(chosenDice) !== 0) {
       currentScore += checkTwos(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       console.log(score)
       twosChosen = true
@@ -264,7 +264,7 @@ document.querySelector('#threes').addEventListener('click', () => {
   if (threesChosen === false) {
     if (checkThrees(chosenDice) !== 0) {
       currentScore += checkThrees(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       console.log(score)
       threesChosen = true
@@ -288,7 +288,7 @@ document.querySelector('#fours').addEventListener('click', () => {
   if (foursChosen === false) {
     if (checkFours(chosenDice) !== 0) {
       currentScore += checkFours(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       console.log(score)
       foursChosen = true
@@ -312,7 +312,7 @@ document.querySelector('#fives').addEventListener('click', () => {
   if (fivesChosen === false) {
     if (checkFives(chosenDice) !== 0) {
       currentScore += checkFives(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       fivesChosen = true
       document.querySelector('#fives').style.color = 'orange'
@@ -336,7 +336,7 @@ document.querySelector('#sixes').addEventListener('click', () => {
   if (sixesChosen === false) {
     if (checkSixes(chosenDice) !== 0) {
       currentScore += checkSixes(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       console.log(score)
       sixesChosen = true
@@ -361,7 +361,7 @@ document.querySelector('#three-of-kind').addEventListener('click', () => {
   if (threeOfAKindChosen === false) {
     if (Number.isInteger(check3OfAKind(chosenDice))) {
       currentScore += check3OfAKind(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       console.log(score)
       threeOfAKindChosen = true
@@ -386,7 +386,7 @@ document.querySelector('#four-of-kind').addEventListener('click', () => {
   if (fourOfAKindChosen === false) {
     if (Number.isInteger(check4OfAKind(chosenDice))) {
       currentScore += check4OfAKind(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       fourOfAKindChosen = true
       document.querySelector('#four-of-kind').style.color = 'orange'
@@ -411,7 +411,7 @@ document.querySelector('#fullhouse').addEventListener('click', () => {
   if (fullHouseChosen === false) {
     if (Number.isInteger(checkFullHouse(chosenDice))) {
       currentScore += checkFullHouse(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       fullHouseChosen = true
       document.querySelector('#fullhouse').style.color = 'orange'
@@ -436,7 +436,7 @@ document.querySelector('#small-straight').addEventListener('click', () => {
   if (smallStraightChosen === false) {
     if (Number.isInteger(checkSmallStraight(chosenDice))) {
       currentScore += checkSmallStraight(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       smallStraightChosen = true
       document.querySelector('#small-straight').style.color = 'orange'
@@ -461,7 +461,7 @@ document.querySelector('#large-straight').addEventListener('click', () => {
   if (largeStraightChosen === false) {
     if (Number.isInteger(checkLargeStraight(chosenDice))) {
       currentScore += checkLargeStraight(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       largeStraightChosen = true
       document.querySelector('#large-straight').style.color = 'orange'
@@ -486,7 +486,7 @@ document.querySelector('#yahtzee').addEventListener('click', () => {
   if (yahtzeeChosen === false) {
     if (Number.isInteger(checkYahtzee(chosenDice))) {
       currentScore += checkYahtzee(chosenDice)
-      scoreDisplay.innerHTML = currentScore
+      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       yahtzeeChosen = true
       document.querySelector('#yahtzee').style.color = 'orange'
@@ -510,7 +510,7 @@ document.querySelector('#chance').addEventListener('click', () => {
   }
   if (chanceChosen === false) {
     currentScore += checkChance(chosenDice)
-    scoreDisplay.innerHTML = currentScore
+    scoreDisplay.innerHTML = `Current Score: ${currentScore}`
     nextTurn()
     chanceChosen = true
     document.querySelector('#chance').style.color = 'orange'
