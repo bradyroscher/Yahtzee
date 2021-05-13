@@ -172,17 +172,18 @@ main {
 #roll {
   cursor: pointer;
   display: flex;
-  width: 110px;
-  height: 40px;
+  width: 115px;
+  height: 45px;
   font-size: 30px;
   font-family: 'Orbitron', sans-serif;
-  background-color: gray;
+  background-color: black;
   color: white;
-  border: outset;
+  border: outset darkgray;
   align-self: center;
+  border-radius: 10px;
 }
 #roll:hover {
-  border: inset;
+  border: inset darkgray;
 }
 #new-game {
   height: 27px;
@@ -190,13 +191,14 @@ main {
   font-family: 'Orbitron', sans-serif;
   margin-bottom: 5px;
   color: white;
-  background-color: gray;
+  background-color: black;
   align-self: center;
-  border: outset;
+  border: outset darkgray;
   height: 50px;
+  border-radius: 10px;
 }
 #new-game:hover {
-  border: inset;
+  border: inset darkgray;
 }
 #roll-counter {
   color: white;
@@ -211,10 +213,11 @@ main {
   font-size: 17px;
   height: 50px;
   width: 85px;
-  background-color: gray;
-  border: outset;
+  background-color: black;
+  border: outset darkgray;
+  border-radius: 10px;
 }
 
 #home:hover {
-  border: inset;
+  border: inset darkgray;
 }
