@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=VT323&display=swap" rel="stylesheet">
+ 
+  <title>Document</title>
+</head>
+<body>
+  <header>
+    <div id=counter-holder>
+      <div id=roll-counter>Roll Count: 0</div>
+      <div id=turn-counter>Turn: 1</div>
+    </div>
+    <div id=header>  
+      <div id='score'>Current Score: 0</div>
+      <div id='high-score'>High Score: 0</div>
+      <button id=new-game>NEW GAME</button>
+      <button id=home>HOME</button>
+    </div>
+  </header>
+  <main>
+    <section id='combos'>
+      <div class='combo' id='ones'>Ones</div>
+      <div class='combo' id='twos'>Twos</div>
+      <div class='combo' id='threes'>Threes</div>
+      <div class='combo' id='fours'>Fours</div>
+      <div class='combo' id='fives'>Fives</div>
+      <div class='combo' id='sixes'>Sixes</div>
+      <div class='combo' id='three-of-kind'>Three of a Kind</div>
+      <div class='combo' id='four-of-kind'>Four of a Kind</div>
+      <div class='combo' id='fullhouse'>Fullhouse</div>
+      <div class='combo' id='small-straight'>Small Straight</div>
+      <div class='combo' id='large-straight'>Large Straight</div>
+      <div class='combo' id='yahtzee'>Yahtzee</div>
+      <div class='combo' id='chance'>Chance</div>
+    </section>
+    <section id=section2>
+      <section id=info>
+        <div id=chosen-dice></div>
+        <div id=robot-talk>
+          <div id=robot-holder><img id=robot src=images/402962.gif></div>
+          <div id=message></div>
+        </div>
+        <div id=counters>
+          
+        </div>
+      </section>
+      <section id= dice-roller>
+        <div id=board></div>
+        <p id=holder><button id=roll>ROLL</button></p>
+      </section>
+    </section>
+  </main>
+  <!-- <footer>
+  </footer> -->
+  <script src='script.js'></script>
+</body>
+</html>
