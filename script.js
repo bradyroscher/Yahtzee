@@ -29,8 +29,20 @@ const turnCounter = document.querySelector('#turn-counter')
 const rollCounter = document.querySelector('#roll-counter')
 const message = document.querySelector('#message')
 
+let typeWriterCounter = 0
+let txt = 'Click on ROLL to get the game going...'
+let speed = 45
+
 //_____Global variable end
 //Funtions (non combo checking)
+function typeWriter() {
+  if (typeWriterCounter < txt.length) {
+    message.innerHTML += txt.charAt(typeWriterCounter)
+    typeWriterCounter++
+    setTimeout(typeWriter, speed)
+  }
+}
+typeWriter()
 const sumDice = (arr) => {
   let sum = 0
   for (i = 0; i < arr.length; i++) {
@@ -95,15 +107,18 @@ const newGame = () => {
   choiceParent.innerHTML = ''
   turnCounter.innerHTML = 'Turn: 1'
   rollCounter.innerHTML = 'Roll Count: 0'
-  message.innerHTML = 'Click on roll to get the game going...'
 }
 const rollDice = () => {
   if (rollCount < 2) {
-    message.innerHTML =
-      'Click on a die to keep it, you can roll again if you need to...<i>BEEP</i>'
+    message.innerHTML = ''
+    txt = 'Clicking on a die keeps it, roll again if you need to...BEEP'
+    typeWriterCounter = 0
+    typeWriter()
   } else {
-    message.innerHTML =
-      '<i>BEEP</i>...Your 3 rolls are up, select all die and choose a combo...'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'BEEP...Your 3 rolls are up, select all die and choose a combo...'
+    typeWriter()
   }
   if (rollCount < 3) {
     diceRolled = []
@@ -128,8 +143,10 @@ const rollDice = () => {
       })
     }
   } else {
-    message.innerHTML =
-      'Your 3 rolls are up, select all die and choose a combo...<i>BEEP</i>'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'BEEP...Your 3 rolls are up, select all die and choose a combo...'
+    typeWriter()
     return
   }
 }
@@ -144,7 +161,10 @@ const nextTurn = () => {
   choiceParent.innerHTML = ''
   rollCounter.innerHTML = 'Roll Count: 0'
   turnCounter.innerHTML = `Turn: ${turnCount}`
-  message.innerHTML = '<i>BEEP</i>...TIME TO ROLL...<i>BEEP</i>'
+  message.innerHTML = ''
+  typeWriterCounter = 0
+  txt = 'BEEP...TIME TO ROLL...BEEP'
+  typeWriter()
   // }
 }
 const confirm0 = (func, tf) => {
@@ -287,7 +307,11 @@ const checkChance = (arr) => {
 // Event Listeners
 document.querySelector('#ones').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
+
     return
   }
   if (onesChosen === false) {
@@ -309,13 +333,19 @@ document.querySelector('#ones').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
     return
   }
 })
 document.querySelector('#twos').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (twosChosen === false) {
@@ -337,13 +367,19 @@ document.querySelector('#twos').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
     return
   }
 })
 document.querySelector('#threes').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (threesChosen === false) {
@@ -365,13 +401,19 @@ document.querySelector('#threes').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
     return
   }
 })
 document.querySelector('#fours').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (foursChosen === false) {
@@ -393,12 +435,18 @@ document.querySelector('#fours').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
   }
 })
 document.querySelector('#fives').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (fivesChosen === false) {
@@ -419,13 +467,19 @@ document.querySelector('#fives').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
   }
 })
 
 document.querySelector('#sixes').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (sixesChosen === false) {
@@ -447,12 +501,18 @@ document.querySelector('#sixes').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
   }
 })
 document.querySelector('#three-of-kind').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (threeOfAKindChosen === false) {
@@ -476,12 +536,18 @@ document.querySelector('#three-of-kind').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
   }
 })
 document.querySelector('#four-of-kind').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (fourOfAKindChosen === false) {
@@ -505,12 +571,18 @@ document.querySelector('#four-of-kind').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
   }
 })
 document.querySelector('#fullhouse').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (fullHouseChosen === false) {
@@ -533,12 +605,18 @@ document.querySelector('#fullhouse').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
   }
 })
 document.querySelector('#small-straight').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (smallStraightChosen === false) {
@@ -562,12 +640,18 @@ document.querySelector('#small-straight').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
   }
 })
 document.querySelector('#large-straight').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (largeStraightChosen === false) {
@@ -591,12 +675,18 @@ document.querySelector('#large-straight').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
   }
 })
 document.querySelector('#yahtzee').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    amessage.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (yahtzeeChosen === false) {
@@ -618,12 +708,18 @@ document.querySelector('#yahtzee').addEventListener('click', () => {
       }
     }
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
   }
 })
 document.querySelector('#chance').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    message.innerHTML = "Make sure you've chosen 5 dice!"
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
     return
   }
   if (chanceChosen === false) {
@@ -632,18 +728,29 @@ document.querySelector('#chance').addEventListener('click', () => {
     nextTurn()
     chanceChosen = true
     document.querySelector('#chance').style.backgroundColor = 'gray'
-    document.querySelector('#yahtzee').style.textDecoration = 'line-through'
+    document.querySelector('#chance').style.textDecoration = 'line-through'
     console.log(score)
   } else {
-    message.innerHTML = 'Combo already chose, choose another!'
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = 'Combo already chose, choose another!'
+    typeWriter()
   }
 })
 document.querySelector('#roll').addEventListener('click', () => {
   rollDice()
+  // message.innerHTML = ''
+  // txt = 'Click on a die to keep it, you can roll again if you need to...BEEP'
+  // typeWriterCounter = 0
+  // typeWriter()
 })
 document.querySelector('#new-game').addEventListener('click', () => {
   newGame()
   console.log('clicked')
+  message.innerHTML = ''
+  txt = 'Click on ROLL to get the game going...'
+  typeWriterCounter = 0
+  typeWriter()
 })
 
 // Event Listeners end

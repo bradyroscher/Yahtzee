@@ -3,7 +3,7 @@ html {
 }
 body {
   font-family: 'Orbitron', sans-serif;
-  background-image: url('images/background.gif');
+  background-color: #004284;
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
@@ -36,7 +36,7 @@ header {
   background-color: grey;
   color: white;
   /* height: 65px; */
-  width: 220px;
+  width: 240px;
   text-align: center;
   padding: 17px;
 }
@@ -46,7 +46,7 @@ header {
   background-color: grey;
   color: white;
   /* height: 65px; */
-  width: 270px;
+  width: 280px;
   text-align: center;
   padding: 17px;
 }
