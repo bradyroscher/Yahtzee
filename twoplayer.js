@@ -43,12 +43,12 @@ const turnCounter = document.querySelector('#turn-counter')
 const rollCounter = document.querySelector('#roll-counter')
 const message = document.querySelector('#message')
 
-playerOneScoreDisplay.style.color = 'blue'
-playerTwoScoreDisplay.style.color = 'white'
-
 let typeWriterCounter = 0
-let txt = 'Click on ROLL to get the game going...'
+let txt = "Player 1, you're up first. Click roll to get started...BEEP"
 let speed = 45
+
+playerOneScoreDisplay.style.textDecoration = 'underline overline'
+playerTwoScoreDisplay.style.border = 'inset darkgray'
 
 //_____Global variable end
 //Funtions (non combo checking)
@@ -175,11 +175,15 @@ const nextTurn = () => {
   if (player === 1) {
     player = 2
     console.log(player)
-    playerOneScoreDisplay.style.color = 'white'
-    playerTwoScoreDisplay.style.color = 'red'
+    playerOneScoreDisplay.style.textDecoration = 'none'
+    playerTwoScoreDisplay.style.textDecoration = 'underline overline'
+    playerTwoScoreDisplay.style.border = 'outset darkgray'
+    playerOneScoreDisplay.style.border = 'insset darkgray'
   } else if (player === 2) {
-    playerOneScoreDisplay.style.color = 'blue'
-    playerTwoScoreDisplay.style.color = 'white'
+    playerOneScoreDisplay.style.textDecoration = 'underline overline'
+    playerTwoScoreDisplay.style.textDecoration = 'none'
+    playerTwoScoreDisplay.style.border = 'inset darkgray'
+    playerOneScoreDisplay.style.border = 'outsset darkgray'
     turnCount++
     player = 1
     console.log(player)
