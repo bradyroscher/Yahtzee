@@ -27,6 +27,7 @@ const choiceParent = document.querySelector('#chosen-dice')
 const highScoreDisplay = document.querySelector('#high-score')
 const turnCounter = document.querySelector('#turn-counter')
 const rollCounter = document.querySelector('#roll-counter')
+const message = document.querySelector('#message')
 
 //_____Global variable end
 //Funtions (non combo checking)
@@ -62,26 +63,48 @@ const newGame = () => {
   largeStraightChosen = false
   yahtzeeChosen = false
   chanceChosen = false
-  document.querySelector('#ones').style.color = 'black'
-  document.querySelector('#twos').style.color = 'black'
-  document.querySelector('#threes').style.color = 'black'
-  document.querySelector('#fours').style.color = 'black'
-  document.querySelector('#fives').style.color = 'black'
-  document.querySelector('#sixes').style.color = 'black'
-  document.querySelector('#three-of-kind').style.color = 'black'
-  document.querySelector('#four-of-kind').style.color = 'black'
-  document.querySelector('#fullhouse').style.color = 'black'
-  document.querySelector('#small-straight').style.color = 'black'
-  document.querySelector('#large-straight').style.color = 'black'
-  document.querySelector('#yahtzee').style.color = 'black'
-  document.querySelector('#chance').style.color = 'black'
+  document.querySelector('#ones').style.textDecoration = 'none'
+  document.querySelector('#twos').style.textDecoration = 'none'
+  document.querySelector('#threes').style.textDecoration = 'none'
+  document.querySelector('#fours').style.textDecoration = 'none'
+  document.querySelector('#fives').style.textDecoration = 'none'
+  document.querySelector('#sixes').style.textDecoration = 'none'
+  document.querySelector('#three-of-kind').textDecoration = 'none'
+  document.querySelector('#four-of-kind').textDecoration = 'none'
+  document.querySelector('#fullhouse').style.textDecoration = 'none'
+  document.querySelector('#small-straight').style.textDecoration = 'none'
+  document.querySelector('#large-straight').style.textDecoration = 'none'
+  document.querySelector('#yahtzee').style.textDecoration = 'none'
+  document.querySelector('#chance').style.textDecoration = 'none'
+
+  document.querySelector('#ones').style.backgroundColor = 'black'
+  document.querySelector('#twos').style.backgroundColor = 'black'
+  document.querySelector('#threes').style.backgroundColor = 'black'
+  document.querySelector('#fours').style.backgroundColor = 'black'
+  document.querySelector('#fives').style.backgroundColor = 'black'
+  document.querySelector('#sixes').style.backgroundColor = 'black'
+  document.querySelector('#three-of-kind').style.backgroundColor = 'black'
+  document.querySelector('#four-of-kind').style.backgroundColor = 'black'
+  document.querySelector('#fullhouse').style.backgroundColor = 'black'
+  document.querySelector('#small-straight').style.backgroundColor = 'black'
+  document.querySelector('#large-straight').style.backgroundColor = 'black'
+  document.querySelector('#yahtzee').style.backgroundColor = 'black'
+  document.querySelector('#chance').style.backgroundColor = 'black'
   scoreDisplay.innerHTML = 'Current Score: 0'
   gameBoard.innerHTML = ''
   choiceParent.innerHTML = ''
   turnCounter.innerHTML = 'Turn: 1'
   rollCounter.innerHTML = 'Roll Count: 0'
+  message.innerHTML = 'Click on roll to get the game going...'
 }
 const rollDice = () => {
+  if (rollCount < 2) {
+    message.innerHTML =
+      'Click on a die to keep it, you can roll again if you need to...<i>BEEP</i>'
+  } else {
+    message.innerHTML =
+      '<i>BEEP</i>...Your 3 rolls are up, select all die and choose a combo...'
+  }
   if (rollCount < 3) {
     diceRolled = []
     gameBoard.innerHTML = ''
@@ -105,7 +128,9 @@ const rollDice = () => {
       })
     }
   } else {
-    alert("You've already rolled thrice, time to chose a combo!")
+    message.innerHTML =
+      'Your 3 rolls are up, select all die and choose a combo...<i>BEEP</i>'
+    return
   }
 }
 const nextTurn = () => {
@@ -119,11 +144,11 @@ const nextTurn = () => {
   choiceParent.innerHTML = ''
   rollCounter.innerHTML = 'Roll Count: 0'
   turnCounter.innerHTML = `Turn: ${turnCount}`
+  message.innerHTML = '<i>BEEP</i>...TIME TO ROLL...<i>BEEP</i>'
   // }
-  // alert('No combo has been chosen.')
 }
 const confirm0 = (func, tf) => {
-  if (confirm(`This will add 0 to the score, is that ok?`)) {
+  if (window.confirm(`This will add 0 to the score, is that ok?`)) {
     nextTurn()
     return 'added 0'
   } else {
@@ -262,7 +287,7 @@ const checkChance = (arr) => {
 // Event Listeners
 document.querySelector('#ones').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (onesChosen === false) {
@@ -272,22 +297,25 @@ document.querySelector('#ones').addEventListener('click', () => {
       nextTurn()
       console.log(score)
       onesChosen = true
-      document.querySelector('#ones').style.color = 'orange'
+      document.querySelector('#ones').style.backgroundColor = 'gray'
+      document.querySelector('#ones').style.textDecoration = 'line-through'
     } else {
       if (confirm0(checkOnes(chosenDice)) === 'added 0') {
         onesChosen = true
-        document.querySelector('#ones').style.color = 'orange'
+        document.querySelector('#ones').style.backgroundColor = 'gray'
+        document.querySelector('#ones').style.textDecoration = 'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
+    return
   }
 })
 document.querySelector('#twos').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (twosChosen === false) {
@@ -297,22 +325,25 @@ document.querySelector('#twos').addEventListener('click', () => {
       nextTurn()
       console.log(score)
       twosChosen = true
-      document.querySelector('#twos').style.color = 'orange'
+      document.querySelector('#twos').style.backgroundColor = 'gray'
+      document.querySelector('#twos').style.textDecoration = 'line-through'
     } else {
       if (confirm0(checkTwos(chosenDice) === 'added 0')) {
         twosChosen = true
-        document.querySelector('#twos').style.color = 'orange'
+        document.querySelector('#twos').style.backgroundColor = 'gray'
+        document.querySelector('#twos').style.textDecoration = 'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
+    return
   }
 })
 document.querySelector('#threes').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (threesChosen === false) {
@@ -322,22 +353,25 @@ document.querySelector('#threes').addEventListener('click', () => {
       nextTurn()
       console.log(score)
       threesChosen = true
-      document.querySelector('#threes').style.color = 'orange'
+      document.querySelector('#threes').style.backgroundColor = 'gray'
+      document.querySelector('#threes').style.textDecoration = 'line-through'
     } else {
       if (confirm0(checkThrees(chosenDice) === 'added 0')) {
         threesChosen = true
-        document.querySelector('#threes').style.color = 'orange'
+        document.querySelector('#threes').style.backgroundColor = 'gray'
+        document.querySelector('#threes').style.textDecoration = 'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
+    return
   }
 })
 document.querySelector('#fours').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (foursChosen === false) {
@@ -347,22 +381,24 @@ document.querySelector('#fours').addEventListener('click', () => {
       nextTurn()
       console.log(score)
       foursChosen = true
-      document.querySelector('#fours').style.color = 'orange'
+      document.querySelector('#fours').style.backgroundColor = 'gray'
+      document.querySelector('#fours').style.textDecoration = 'line-through'
     } else {
       if (confirm0(checkFours(chosenDice) === 'added 0')) {
         foursChosen = true
-        document.querySelector('#fours').style.color = 'orange'
+        document.querySelector('#fours').style.backgroundColor = 'gray'
+        document.querySelector('#fours').style.textDecoration = 'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
   }
 })
 document.querySelector('#fives').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (fivesChosen === false) {
@@ -371,23 +407,25 @@ document.querySelector('#fives').addEventListener('click', () => {
       scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       fivesChosen = true
-      document.querySelector('#fives').style.color = 'orange'
+      document.querySelector('#fives').style.backgroundColor = 'gray'
+      document.querySelector('#fives').style.textDecoration = 'line-through'
     } else {
       if (confirm0(checkFives(chosenDice) === 'added 0')) {
         fivesChosen = true
-        document.querySelector('#fives').style.color = 'orange'
+        document.querySelector('#fives').style.backgroundColor = 'gray'
+        document.querySelector('#fives').style.textDecoration = 'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
   }
 })
 
 document.querySelector('#sixes').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (sixesChosen === false) {
@@ -397,22 +435,24 @@ document.querySelector('#sixes').addEventListener('click', () => {
       nextTurn()
       console.log(score)
       sixesChosen = true
-      document.querySelector('#sixes').style.color = 'orange'
+      document.querySelector('#sixes').style.backgroundColor = 'gray'
+      document.querySelector('#sixes').style.textDecoration = 'line-through'
     } else {
       if (confirm0(checkFives(chosenDice) === 'added 0')) {
         sixesChosen = true
-        document.querySelector('#sixes').style.color = 'orange'
+        document.querySelector('#sixes').style.backgroundColor = 'gray'
+        document.querySelector('#sixes').style.textDecoration = 'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
   }
 })
 document.querySelector('#three-of-kind').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (threeOfAKindChosen === false) {
@@ -422,22 +462,26 @@ document.querySelector('#three-of-kind').addEventListener('click', () => {
       nextTurn()
       console.log(score)
       threeOfAKindChosen = true
-      document.querySelector('#three-of-kind').style.color = 'orange'
+      document.querySelector('#three-of-kind').style.backgroundColor = 'gray'
+      document.querySelector('#three-of-kind').style.textDecoration =
+        'line-through'
     } else {
       if (confirm0(check3OfAKind(chosenDice)) === 'added 0') {
         threeOfAKindChosen = true
-        document.querySelector('#three-of-kind').style.color = 'orange'
+        document.querySelector('#three-of-kind').style.backgroundColor = 'gray'
+        document.querySelector('#three-of-kind').style.textDecoration =
+          'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
   }
 })
 document.querySelector('#four-of-kind').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (fourOfAKindChosen === false) {
@@ -446,23 +490,27 @@ document.querySelector('#four-of-kind').addEventListener('click', () => {
       scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       fourOfAKindChosen = true
-      document.querySelector('#four-of-kind').style.color = 'orange'
+      document.querySelector('#four-of-kind').style.backgroundColor = 'gray'
+      document.querySelector('#four-of-kind').style.textDecoration =
+        'line-through'
       console.log(score)
     } else {
       if (confirm0(check4OfAKind(chosenDice)) === 'added 0') {
         fourOfAKindChosen = true
-        document.querySelector('#four-of-kind').style.color = 'orange'
+        document.querySelector('#four-of-kind').style.backgroundColor = 'gray'
+        document.querySelector('#four-of-kind').style.textDecoration =
+          'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
   }
 })
 document.querySelector('#fullhouse').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (fullHouseChosen === false) {
@@ -471,23 +519,26 @@ document.querySelector('#fullhouse').addEventListener('click', () => {
       scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       fullHouseChosen = true
-      document.querySelector('#fullhouse').style.color = 'orange'
+      document.querySelector('#fullhouse').style.backgroundColor = 'gray'
+      document.querySelector('#fullhouse').style.textDecoration = 'line-through'
       console.log(score)
     } else {
       if (confirm0(checkFullHouse(chosenDice)) === 'added 0') {
         fullHouseChosen = true
-        document.querySelector('#fullhouse').style.color = 'orange'
+        document.querySelector('#fullhouse').style.backgroundColor = 'gray'
+        document.querySelector('#fullhouse').style.textDecoration =
+          'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
   }
 })
 document.querySelector('#small-straight').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (smallStraightChosen === false) {
@@ -496,23 +547,27 @@ document.querySelector('#small-straight').addEventListener('click', () => {
       scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       smallStraightChosen = true
-      document.querySelector('#small-straight').style.color = 'orange'
+      document.querySelector('#small-straight').style.backgroundColor = 'gray'
+      document.querySelector('#small-straight').style.textDecoration =
+        'line-through'
       console.log(score)
     } else {
       if (confirm0(checkSmallStraight(chosenDice)) === 'added 0') {
         smallStraightChosen = true
-        document.querySelector('#small-straight').style.color = 'orange'
+        document.querySelector('#small-straight').style.backgroundColor = 'gray'
+        document.querySelector('#small-straight').style.textDecoration =
+          'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
   }
 })
 document.querySelector('#large-straight').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (largeStraightChosen === false) {
@@ -521,23 +576,27 @@ document.querySelector('#large-straight').addEventListener('click', () => {
       scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       largeStraightChosen = true
-      document.querySelector('#large-straight').style.color = 'orange'
+      document.querySelector('#large-straight').style.backgroundColor = 'gray'
+      document.querySelector('#large-straight').style.textDecoration =
+        'line-through'
       console.log(score)
     } else {
       if (confirm0(checkLargeStraight(chosenDice)) === 'added 0') {
         largeStraightChosen = true
-        document.querySelector('#large-straight').style.color = 'orange'
+        document.querySelector('#large-straight').style.backgroundColor = 'gray'
+        document.querySelector('#large-straight').style.textDecoration =
+          'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
   }
 })
 document.querySelector('#yahtzee').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    amessage.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (yahtzeeChosen === false) {
@@ -546,23 +605,25 @@ document.querySelector('#yahtzee').addEventListener('click', () => {
       scoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       yahtzeeChosen = true
-      document.querySelector('#yahtzee').style.color = 'orange'
+      document.querySelector('#yahtzee').style.backgroundColor = 'gray'
+      document.querySelector('#yahtzee').style.textDecoration = 'line-through'
       console.log(score)
     } else {
       if (confirm0(checkYahtzee(chosenDice)) === 'added 0') {
         yahtzeeChosen = true
-        document.querySelector('#yahtzee').style.color = 'orange'
+        document.querySelector('#yahtzee').style.backgroundColor = 'gray'
+        document.querySelector('#yahtzee').style.textDecoration = 'line-through'
       } else {
         return
       }
     }
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
   }
 })
 document.querySelector('#chance').addEventListener('click', () => {
   if (chosenDice.length < 5) {
-    alert("Make sure you've chosen 5 dice!")
+    message.innerHTML = "Make sure you've chosen 5 dice!"
     return
   }
   if (chanceChosen === false) {
@@ -570,10 +631,11 @@ document.querySelector('#chance').addEventListener('click', () => {
     scoreDisplay.innerHTML = `Current Score: ${currentScore}`
     nextTurn()
     chanceChosen = true
-    document.querySelector('#chance').style.color = 'orange'
+    document.querySelector('#chance').style.backgroundColor = 'gray'
+    document.querySelector('#yahtzee').style.textDecoration = 'line-through'
     console.log(score)
   } else {
-    alert('Combo already chose, choose another!')
+    message.innerHTML = 'Combo already chose, choose another!'
   }
 })
 document.querySelector('#roll').addEventListener('click', () => {
@@ -583,5 +645,5 @@ document.querySelector('#new-game').addEventListener('click', () => {
   newGame()
   console.log('clicked')
 })
-// document.querySelector('#next').addEventListener('click', ())
+
 // Event Listeners end
