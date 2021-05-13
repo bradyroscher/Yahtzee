@@ -6,20 +6,33 @@ let playerTwoScore = 0
 let diceToRoll = 5
 let rollCount = 0
 let turnCount = 1
-let comboChosen = false
-let onesChosen = false
-let twosChosen = false
-let threesChosen = false
-let foursChosen = false
-let fivesChosen = false
-let sixesChosen = false
-let threeOfAKindChosen = false
-let fourOfAKindChosen = false
-let fullHouseChosen = false
-let smallStraightChosen = false
-let largeStraightChosen = false
-let yahtzeeChosen = false
-let chanceChosen = false
+let comboChosenP1 = false
+let onesChosenP1 = false
+let twosChosenP1 = false
+let threesChosenP1 = false
+let foursChosenP1 = false
+let fivesChosenP1 = false
+let sixesChosenP1 = false
+let threeOfAKindChosenP1 = false
+let fourOfAKindChosenP1 = false
+let fullHouseChosenP1 = false
+let smallStraightChosenP1 = false
+let largeStraightChosenP1 = false
+let yahtzeeChosenP1 = false
+let chanceChosenP1 = false
+let onesChosenP2 = false
+let twosChosenP2 = false
+let threesChosenP2 = false
+let foursChosenP2 = false
+let fivesChosenP2 = false
+let sixesChosenP2 = false
+let threeOfAKindChosenP2 = false
+let fourOfAKindChosenP2 = false
+let fullHouseChosenP2 = false
+let smallStraightChosenP2 = false
+let largeStraightChosenP2 = false
+let yahtzeeChosenP2 = false
+let chanceChosenP2 = false
 let player = 1
 const gameBoard = document.querySelector('#board')
 const playerOneScoreDisplay = document.querySelector('#p1-score')
@@ -254,7 +267,7 @@ const check3OfAKind = (arr) => {
       return sumDice(arr)
     }
   }
-  return 'Not a 3 of a kind!'
+  return 0
 }
 const check4OfAKind = (arr) => {
   let sortedArr = arr.sort()
@@ -267,7 +280,7 @@ const check4OfAKind = (arr) => {
       return sumDice(arr)
     }
   }
-  return 'Not a 4 of a kind!'
+  return 0
 }
 const checkFullHouse = (arr) => {
   let sortedArr = arr.sort()
@@ -281,7 +294,7 @@ const checkFullHouse = (arr) => {
   ) {
     return 25
   }
-  return 'Not a Fullhouse!'
+  return 0
 }
 const checkSmallStraight = (arr) => {
   let trimedDice = [...new Set(arr)]
@@ -296,7 +309,7 @@ const checkSmallStraight = (arr) => {
   ) {
     return 30
   }
-  return 'Not a small straight!'
+  return 0
 }
 const checkLargeStraight = (arr) => {
   let sortedArr = arr.sort()
@@ -308,7 +321,7 @@ const checkLargeStraight = (arr) => {
   ) {
     return 40
   }
-  return 'Not a large straight!'
+  return 0
 }
 const checkYahtzee = (arr) => {
   if (
@@ -319,7 +332,7 @@ const checkYahtzee = (arr) => {
   ) {
     return 50
   }
-  return 'Not a Yahtzee!'
+  return 0
 }
 const checkChance = (arr) => {
   return sumDice(arr)
@@ -333,33 +346,30 @@ document.querySelector('#ones').addEventListener('click', () => {
     typeWriterCounter = 0
     txt = "Make sure you've chosen 5 dice!"
     typeWriter()
-
     return
   }
-  if (onesChosen === false) {
-    if (checkOnes(chosenDice) !== 0) {
-      // playerOneScore += checkOnes(chosenDice)
-      // playerOneScoreDisplay.innerHTML = `Player 1: ${playerOneScore}`
-      addScore(checkOnes)
-      nextTurn()
-      onesChosen = true
-      document.querySelector('#ones').style.backgroundColor = 'gray'
-      document.querySelector('#ones').style.textDecoration = 'line-through'
-    } else {
-      if (confirm0(checkOnes(chosenDice)) === 'added 0') {
-        onesChosen = true
-        document.querySelector('#ones').style.backgroundColor = 'gray'
-        document.querySelector('#ones').style.textDecoration = 'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && onesChosenP1 === true) ||
+    (player === 2 && onesChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
     return
+  }
+  addScore(checkOnes)
+  if (player === 1) {
+    document.querySelector('#onesp1').style.color = 'white'
+    onesChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#onesp2').style.color = 'white'
+    onesChosenP2 = true
+    nextTurn()
+  }
+  if (onesChosenP1 === true && onesChosenP2 === true) {
+    document.querySelector('#ones').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#twos').addEventListener('click', () => {
@@ -370,28 +380,28 @@ document.querySelector('#twos').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (twosChosen === false) {
-    if (checkTwos(chosenDice) !== 0) {
-      addScore(checkTwos)
-      nextTurn()
-      twosChosen = true
-      document.querySelector('#twos').style.backgroundColor = 'gray'
-      document.querySelector('#twos').style.textDecoration = 'line-through'
-    } else {
-      if (confirm0(checkTwos(chosenDice) === 'added 0')) {
-        twosChosen = true
-        document.querySelector('#twos').style.backgroundColor = 'gray'
-        document.querySelector('#twos').style.textDecoration = 'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && twosChosenP1 === true) ||
+    (player === 2 && twosChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
     return
+  }
+  addScore(checkTwos)
+  if (player === 1) {
+    document.querySelector('#twosp1').style.color = 'white'
+    twosChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#twosp2').style.color = 'white'
+    twosChosenP2 = true
+    nextTurn()
+  }
+  if (twosChosenP1 === true && twosChosenP2 === true) {
+    document.querySelector('#twos').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#threes').addEventListener('click', () => {
@@ -402,28 +412,28 @@ document.querySelector('#threes').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (threesChosen === false) {
-    if (checkThrees(chosenDice) !== 0) {
-      addScore(checkThrees)
-      nextTurn()
-      threesChosen = true
-      document.querySelector('#threes').style.backgroundColor = 'gray'
-      document.querySelector('#threes').style.textDecoration = 'line-through'
-    } else {
-      if (confirm0(checkThrees(chosenDice) === 'added 0')) {
-        threesChosen = true
-        document.querySelector('#threes').style.backgroundColor = 'gray'
-        document.querySelector('#threes').style.textDecoration = 'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && threesChosenP1 === true) ||
+    (player === 2 && threesChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
     return
+  }
+  addScore(checkThrees)
+  if (player === 1) {
+    document.querySelector('#threesp1').style.color = 'white'
+    threesChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#threesp2').style.color = 'white'
+    threesChosenP2 = true
+    nextTurn()
+  }
+  if (threesChosenP1 === true && threesChosenP2 === true) {
+    document.querySelector('#threes').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#fours').addEventListener('click', () => {
@@ -434,27 +444,28 @@ document.querySelector('#fours').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (foursChosen === false) {
-    if (checkFours(chosenDice) !== 0) {
-      addScore(checkFours)
-      nextTurn()
-      foursChosen = true
-      document.querySelector('#fours').style.backgroundColor = 'gray'
-      document.querySelector('#fours').style.textDecoration = 'line-through'
-    } else {
-      if (confirm0(checkFours(chosenDice) === 'added 0')) {
-        foursChosen = true
-        document.querySelector('#fours').style.backgroundColor = 'gray'
-        document.querySelector('#fours').style.textDecoration = 'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && foursChosenP1 === true) ||
+    (player === 2 && foursChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
+    return
+  }
+  addScore(checkFours)
+  if (player === 1) {
+    document.querySelector('#foursp1').style.color = 'white'
+    foursChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#foursp2').style.color = 'white'
+    foursChosenP2 = true
+    nextTurn()
+  }
+  if (foursChosenP1 === true && foursChosenP2 === true) {
+    document.querySelector('#fours').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#fives').addEventListener('click', () => {
@@ -465,27 +476,28 @@ document.querySelector('#fives').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (fivesChosen === false) {
-    if (checkFives(chosenDice) !== 0) {
-      addScore(checkFives)
-      nextTurn()
-      fivesChosen = true
-      document.querySelector('#fives').style.backgroundColor = 'gray'
-      document.querySelector('#fives').style.textDecoration = 'line-through'
-    } else {
-      if (confirm0(checkFives(chosenDice) === 'added 0')) {
-        fivesChosen = true
-        document.querySelector('#fives').style.backgroundColor = 'gray'
-        document.querySelector('#fives').style.textDecoration = 'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && fivesChosenP1 === true) ||
+    (player === 2 && fivesChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
+    return
+  }
+  addScore(checkFives)
+  if (player === 1) {
+    document.querySelector('#fivesp1').style.color = 'white'
+    fivesChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#fivesp2').style.color = 'white'
+    fivesChosenP2 = true
+    nextTurn()
+  }
+  if (fivesChosenP1 === true && fivesChosenP2 === true) {
+    document.querySelector('#fives').style.backgroundColor = 'gray'
   }
 })
 
@@ -497,27 +509,28 @@ document.querySelector('#sixes').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (sixesChosen === false) {
-    if (checkSixes(chosenDice) !== 0) {
-      addScore(checkSixes)
-      nextTurn()
-      sixesChosen = true
-      document.querySelector('#sixes').style.backgroundColor = 'gray'
-      document.querySelector('#sixes').style.textDecoration = 'line-through'
-    } else {
-      if (confirm0(checkFives(chosenDice) === 'added 0')) {
-        sixesChosen = true
-        document.querySelector('#sixes').style.backgroundColor = 'gray'
-        document.querySelector('#sixes').style.textDecoration = 'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && sixesChosenP1 === true) ||
+    (player === 2 && sixesChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
+    return
+  }
+  addScore(checkSixes)
+  if (player === 1) {
+    document.querySelector('#sixesp1').style.color = 'white'
+    onesChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#sixesp2').style.color = 'white'
+    onesChosenP2 = true
+    nextTurn()
+  }
+  if (sixesChosenP1 === true && sixesChosenP2 === true) {
+    document.querySelector('#sixes').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#three-of-kind').addEventListener('click', () => {
@@ -528,29 +541,28 @@ document.querySelector('#three-of-kind').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (threeOfAKindChosen === false) {
-    if (Number.isInteger(check3OfAKind(chosenDice))) {
-      addScore(check3OfAKind)
-      nextTurn()
-      threeOfAKindChosen = true
-      document.querySelector('#three-of-kind').style.backgroundColor = 'gray'
-      document.querySelector('#three-of-kind').style.textDecoration =
-        'line-through'
-    } else {
-      if (confirm0(check3OfAKind(chosenDice)) === 'added 0') {
-        threeOfAKindChosen = true
-        document.querySelector('#three-of-kind').style.backgroundColor = 'gray'
-        document.querySelector('#three-of-kind').style.textDecoration =
-          'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && threeOfAKindChosenP1 === true) ||
+    (player === 2 && threeOfAKindChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
+    return
+  }
+  addScore(check3OfAKind)
+  if (player === 1) {
+    document.querySelector('#three-of-kindp1').style.color = 'white'
+    threeOfAKindChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#three-of-kindp2').style.color = 'white'
+    threeOfAKindChosenP2 = true
+    nextTurn()
+  }
+  if (threeOfAKindChosenP1 === true && threeOfAKindChosenP2 === true) {
+    document.querySelector('#three-of-kind').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#four-of-kind').addEventListener('click', () => {
@@ -561,29 +573,28 @@ document.querySelector('#four-of-kind').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (fourOfAKindChosen === false) {
-    if (Number.isInteger(check4OfAKind(chosenDice))) {
-      addScore(check4OfAKind)
-      nextTurn()
-      fourOfAKindChosen = true
-      document.querySelector('#four-of-kind').style.backgroundColor = 'gray'
-      document.querySelector('#four-of-kind').style.textDecoration =
-        'line-through'
-    } else {
-      if (confirm0(check4OfAKind(chosenDice)) === 'added 0') {
-        fourOfAKindChosen = true
-        document.querySelector('#four-of-kind').style.backgroundColor = 'gray'
-        document.querySelector('#four-of-kind').style.textDecoration =
-          'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && fourOfAKindChosenP1 === true) ||
+    (player === 2 && fourOfAKindChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
+    return
+  }
+  addScore(check4OfAKind)
+  if (player === 1) {
+    document.querySelector('#four-of-kindp1').style.color = 'white'
+    fourOfAKindChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#four-of-kindp2').style.color = 'white'
+    fourOfAKindChosenP2 = true
+    nextTurn()
+  }
+  if (fourOfAKindChosenP1 === true && fourOfAKindChosenP2 === true) {
+    document.querySelector('#four-of-kind').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#fullhouse').addEventListener('click', () => {
@@ -594,28 +605,28 @@ document.querySelector('#fullhouse').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (fullHouseChosen === false) {
-    if (Number.isInteger(checkFullHouse(chosenDice))) {
-      addScore(checkFullHouse)
-      nextTurn()
-      fullHouseChosen = true
-      document.querySelector('#fullhouse').style.backgroundColor = 'gray'
-      document.querySelector('#fullhouse').style.textDecoration = 'line-through'
-    } else {
-      if (confirm0(checkFullHouse(chosenDice)) === 'added 0') {
-        fullHouseChosen = true
-        document.querySelector('#fullhouse').style.backgroundColor = 'gray'
-        document.querySelector('#fullhouse').style.textDecoration =
-          'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && fullHouseChosenP1 === true) ||
+    (player === 2 && fullHouseChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
+    return
+  }
+  addScore(checkFullHouse)
+  if (player === 1) {
+    document.querySelector('#fullhousep1').style.color = 'white'
+    fullHouseChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#fullhousep2').style.color = 'white'
+    fullHouseChosenP2 = true
+    nextTurn()
+  }
+  if (fullHouseChosenP1 === true && fullHouseChosenP2 === true) {
+    document.querySelector('#fullhouse').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#small-straight').addEventListener('click', () => {
@@ -626,29 +637,28 @@ document.querySelector('#small-straight').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (smallStraightChosen === false) {
-    if (Number.isInteger(checkSmallStraight(chosenDice))) {
-      addScore(checkSmallStraight)
-      nextTurn()
-      smallStraightChosen = true
-      document.querySelector('#small-straight').style.backgroundColor = 'gray'
-      document.querySelector('#small-straight').style.textDecoration =
-        'line-through'
-    } else {
-      if (confirm0(checkSmallStraight(chosenDice)) === 'added 0') {
-        smallStraightChosen = true
-        document.querySelector('#small-straight').style.backgroundColor = 'gray'
-        document.querySelector('#small-straight').style.textDecoration =
-          'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && smallStraightChosenP1 === true) ||
+    (player === 2 && smallStraightChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
+    return
+  }
+  addScore(checkSmallStraight)
+  if (player === 1) {
+    document.querySelector('#small-straightp1').style.color = 'white'
+    smallStraightChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#small-straightp2').style.color = 'white'
+    smallStraightChosenP2 = true
+    nextTurn()
+  }
+  if (smallStraightChosenP1 === true && smallStraightChosenP2 === true) {
+    document.querySelector('#small-straight').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#large-straight').addEventListener('click', () => {
@@ -659,29 +669,28 @@ document.querySelector('#large-straight').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (largeStraightChosen === false) {
-    if (Number.isInteger(checkLargeStraight(chosenDice))) {
-      addScore(checkLargeStraight)
-      nextTurn()
-      largeStraightChosen = true
-      document.querySelector('#large-straight').style.backgroundColor = 'gray'
-      document.querySelector('#large-straight').style.textDecoration =
-        'line-through'
-    } else {
-      if (confirm0(checkLargeStraight(chosenDice)) === 'added 0') {
-        largeStraightChosen = true
-        document.querySelector('#large-straight').style.backgroundColor = 'gray'
-        document.querySelector('#large-straight').style.textDecoration =
-          'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && largeStraightChosenP1 === true) ||
+    (player === 2 && largeStraightChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
+    return
+  }
+  addScore(checkLargeStraight)
+  if (player === 1) {
+    document.querySelector('#large-straightp1').style.color = 'white'
+    largeStraightChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#large-straightp2').style.color = 'white'
+    largeStraightChosenP2 = true
+    nextTurn()
+  }
+  if (largeStraightChosenP1 === true && largeStraightChosenP2 === true) {
+    document.querySelector('#large-straight').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#yahtzee').addEventListener('click', () => {
@@ -692,27 +701,28 @@ document.querySelector('#yahtzee').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (yahtzeeChosen === false) {
-    if (Number.isInteger(checkYahtzee(chosenDice))) {
-      addScore(checkYahtzee)
-      nextTurn()
-      yahtzeeChosen = true
-      document.querySelector('#yahtzee').style.backgroundColor = 'gray'
-      document.querySelector('#yahtzee').style.textDecoration = 'line-through'
-    } else {
-      if (confirm0(checkYahtzee(chosenDice)) === 'added 0') {
-        yahtzeeChosen = true
-        document.querySelector('#yahtzee').style.backgroundColor = 'gray'
-        document.querySelector('#yahtzee').style.textDecoration = 'line-through'
-      } else {
-        return
-      }
-    }
-  } else {
+  if (
+    (player === 1 && yahtzeeChosenP1 === true) ||
+    (player === 2 && yahtzeeChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
+    return
+  }
+  addScore(checkYahtzee)
+  if (player === 1) {
+    document.querySelector('#yahtzeep1').style.color = 'white'
+    yahtzeeChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#yahtzeep2').style.color = 'white'
+    yahtzeeChosenP2 = true
+    nextTurn()
+  }
+  if (yahtzeeChosenP1 === true && yahtzeeChosenP2 === true) {
+    document.querySelector('#yahtzee').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#chance').addEventListener('click', () => {
@@ -723,17 +733,28 @@ document.querySelector('#chance').addEventListener('click', () => {
     typeWriter()
     return
   }
-  if (chanceChosen === false) {
-    addScore(checkChance)
-    nextTurn()
-    chanceChosen = true
-    document.querySelector('#chance').style.backgroundColor = 'gray'
-    document.querySelector('#chance').style.textDecoration = 'line-through'
-  } else {
+  if (
+    (player === 1 && chanceChosenP1 === true) ||
+    (player === 2 && chanceChosenP2 === true)
+  ) {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'Combo already chose, choose another!'
+    txt = 'You have already used this combo, choose another!'
     typeWriter()
+    return
+  }
+  addScore(checkChance)
+  if (player === 1) {
+    document.querySelector('#chancep1').style.color = 'white'
+    chanceChosenP1 = true
+    nextTurn()
+  } else if (player === 2) {
+    document.querySelector('#chancep2').style.color = 'white'
+    chanceChosenP2 = true
+    nextTurn()
+  }
+  if (chanceChosenP1 === true && chanceChosenP2 === true) {
+    document.querySelector('#chance').style.backgroundColor = 'gray'
   }
 })
 document.querySelector('#roll').addEventListener('click', () => {

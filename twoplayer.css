@@ -36,7 +36,7 @@ header {
   background-color: grey;
   color: white;
   /* height: 65px; */
-  width: 280px;
+  width: 240px;
   text-align: center;
   padding: 17px;
 }
@@ -142,9 +142,14 @@ main {
   top: 0;
   transition: top ease 0.25s;
   cursor: pointer;
+  display: flex;
+  justify-content: space-around;
 }
 .combo:hover {
   top: -7px;
+}
+.picktracker {
+  color: black;
 }
 .die {
   position: relative;
