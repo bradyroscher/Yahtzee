@@ -20,11 +20,12 @@ let smallStraightChosen = false
 let largeStraightChosen = false
 let yahtzeeChosen = false
 let chanceChosen = false
+let player = 1
 const gameBoard = document.querySelector('#board')
-const scoreDisplay = document.querySelector('#score')
+const playerOneScoreDisplay = document.querySelector('#p1-score')
 const twos = document.querySelector('#twos')
 const choiceParent = document.querySelector('#chosen-dice')
-const highScoreDisplay = document.querySelector('#high-score')
+const playerTwoScoreDisplay = document.querySelector('#high-score')
 const turnCounter = document.querySelector('#turn-counter')
 const rollCounter = document.querySelector('#roll-counter')
 const message = document.querySelector('#message')
@@ -53,7 +54,7 @@ const sumDice = (arr) => {
 const newGame = () => {
   if (currentScore > highScore) {
     highScore = currentScore
-    highScoreDisplay.innerHTML = `High Score: ${highScore}`
+    playerTwoScoreDisplay.innerHTML = `High Score: ${highScore}`
   }
   chosenDice = []
   diceRolled = []
@@ -102,7 +103,7 @@ const newGame = () => {
   document.querySelector('#large-straight').style.backgroundColor = 'black'
   document.querySelector('#yahtzee').style.backgroundColor = 'black'
   document.querySelector('#chance').style.backgroundColor = 'black'
-  scoreDisplay.innerHTML = 'Current Score: 0'
+  playerOneScoreDisplay.innerHTML = 'Current Score: 0'
   gameBoard.innerHTML = ''
   choiceParent.innerHTML = ''
   turnCounter.innerHTML = 'Turn: 1'
@@ -137,7 +138,6 @@ const rollDice = () => {
         let choiceDiv = document.createElement('div')
         choiceDiv.innerHTML = `<img src=images/Dice-${die}.png>`
         choiceParent.appendChild(choiceDiv)
-        console.log(chosenDice)
         diceDiv.parentNode.removeChild(diceDiv)
         diceToRoll -= 1
       })
@@ -156,7 +156,16 @@ const nextTurn = () => {
   chosenDice = []
   dice = []
   rollCount = 0
-  turnCount++
+  if (player === 1) {
+    player = 2
+    console.log(player)
+  } else if (player === 2) {
+    turnCount++
+    player = 1
+    console.log(player)
+  }
+  console.log(turnCount)
+  // console.log(player)
   gameBoard.innerHTML = ''
   choiceParent.innerHTML = ''
   rollCounter.innerHTML = 'Roll Count: 0'
@@ -182,7 +191,6 @@ const checkOnes = (arr) => {
   for (i = 0; i < arr.length; i++) {
     if (arr[i] === 1) score += 1
   }
-  console.log(score)
   return score
 }
 const checkTwos = (arr) => {
@@ -262,7 +270,6 @@ const checkFullHouse = (arr) => {
 const checkSmallStraight = (arr) => {
   let trimedDice = [...new Set(arr)]
   let sortedArr = trimedDice.sort()
-  console.log(sortedArr)
   if (
     (sortedArr[0] === sortedArr[1] - 1 &&
       sortedArr[0] === sortedArr[2] - 2 &&
@@ -277,7 +284,6 @@ const checkSmallStraight = (arr) => {
 }
 const checkLargeStraight = (arr) => {
   let sortedArr = arr.sort()
-  console.log(sortedArr)
   if (
     sortedArr[0] === sortedArr[1] - 1 &&
     sortedArr[0] === sortedArr[2] - 2 &&
@@ -317,9 +323,8 @@ document.querySelector('#ones').addEventListener('click', () => {
   if (onesChosen === false) {
     if (checkOnes(chosenDice) !== 0) {
       currentScore += checkOnes(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
-      console.log(score)
       onesChosen = true
       document.querySelector('#ones').style.backgroundColor = 'gray'
       document.querySelector('#ones').style.textDecoration = 'line-through'
@@ -351,9 +356,8 @@ document.querySelector('#twos').addEventListener('click', () => {
   if (twosChosen === false) {
     if (checkTwos(chosenDice) !== 0) {
       currentScore += checkTwos(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
-      console.log(score)
       twosChosen = true
       document.querySelector('#twos').style.backgroundColor = 'gray'
       document.querySelector('#twos').style.textDecoration = 'line-through'
@@ -385,9 +389,8 @@ document.querySelector('#threes').addEventListener('click', () => {
   if (threesChosen === false) {
     if (checkThrees(chosenDice) !== 0) {
       currentScore += checkThrees(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
-      console.log(score)
       threesChosen = true
       document.querySelector('#threes').style.backgroundColor = 'gray'
       document.querySelector('#threes').style.textDecoration = 'line-through'
@@ -419,9 +422,8 @@ document.querySelector('#fours').addEventListener('click', () => {
   if (foursChosen === false) {
     if (checkFours(chosenDice) !== 0) {
       currentScore += checkFours(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
-      console.log(score)
       foursChosen = true
       document.querySelector('#fours').style.backgroundColor = 'gray'
       document.querySelector('#fours').style.textDecoration = 'line-through'
@@ -452,7 +454,7 @@ document.querySelector('#fives').addEventListener('click', () => {
   if (fivesChosen === false) {
     if (checkFives(chosenDice) !== 0) {
       currentScore += checkFives(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       fivesChosen = true
       document.querySelector('#fives').style.backgroundColor = 'gray'
@@ -485,9 +487,8 @@ document.querySelector('#sixes').addEventListener('click', () => {
   if (sixesChosen === false) {
     if (checkSixes(chosenDice) !== 0) {
       currentScore += checkSixes(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
-      console.log(score)
       sixesChosen = true
       document.querySelector('#sixes').style.backgroundColor = 'gray'
       document.querySelector('#sixes').style.textDecoration = 'line-through'
@@ -518,9 +519,8 @@ document.querySelector('#three-of-kind').addEventListener('click', () => {
   if (threeOfAKindChosen === false) {
     if (Number.isInteger(check3OfAKind(chosenDice))) {
       currentScore += check3OfAKind(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
-      console.log(score)
       threeOfAKindChosen = true
       document.querySelector('#three-of-kind').style.backgroundColor = 'gray'
       document.querySelector('#three-of-kind').style.textDecoration =
@@ -553,13 +553,12 @@ document.querySelector('#four-of-kind').addEventListener('click', () => {
   if (fourOfAKindChosen === false) {
     if (Number.isInteger(check4OfAKind(chosenDice))) {
       currentScore += check4OfAKind(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       fourOfAKindChosen = true
       document.querySelector('#four-of-kind').style.backgroundColor = 'gray'
       document.querySelector('#four-of-kind').style.textDecoration =
         'line-through'
-      console.log(score)
     } else {
       if (confirm0(check4OfAKind(chosenDice)) === 'added 0') {
         fourOfAKindChosen = true
@@ -588,12 +587,11 @@ document.querySelector('#fullhouse').addEventListener('click', () => {
   if (fullHouseChosen === false) {
     if (Number.isInteger(checkFullHouse(chosenDice))) {
       currentScore += checkFullHouse(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       fullHouseChosen = true
       document.querySelector('#fullhouse').style.backgroundColor = 'gray'
       document.querySelector('#fullhouse').style.textDecoration = 'line-through'
-      console.log(score)
     } else {
       if (confirm0(checkFullHouse(chosenDice)) === 'added 0') {
         fullHouseChosen = true
@@ -622,13 +620,12 @@ document.querySelector('#small-straight').addEventListener('click', () => {
   if (smallStraightChosen === false) {
     if (Number.isInteger(checkSmallStraight(chosenDice))) {
       currentScore += checkSmallStraight(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       smallStraightChosen = true
       document.querySelector('#small-straight').style.backgroundColor = 'gray'
       document.querySelector('#small-straight').style.textDecoration =
         'line-through'
-      console.log(score)
     } else {
       if (confirm0(checkSmallStraight(chosenDice)) === 'added 0') {
         smallStraightChosen = true
@@ -657,13 +654,12 @@ document.querySelector('#large-straight').addEventListener('click', () => {
   if (largeStraightChosen === false) {
     if (Number.isInteger(checkLargeStraight(chosenDice))) {
       currentScore += checkLargeStraight(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       largeStraightChosen = true
       document.querySelector('#large-straight').style.backgroundColor = 'gray'
       document.querySelector('#large-straight').style.textDecoration =
         'line-through'
-      console.log(score)
     } else {
       if (confirm0(checkLargeStraight(chosenDice)) === 'added 0') {
         largeStraightChosen = true
@@ -692,12 +688,11 @@ document.querySelector('#yahtzee').addEventListener('click', () => {
   if (yahtzeeChosen === false) {
     if (Number.isInteger(checkYahtzee(chosenDice))) {
       currentScore += checkYahtzee(chosenDice)
-      scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+      playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
       nextTurn()
       yahtzeeChosen = true
       document.querySelector('#yahtzee').style.backgroundColor = 'gray'
       document.querySelector('#yahtzee').style.textDecoration = 'line-through'
-      console.log(score)
     } else {
       if (confirm0(checkYahtzee(chosenDice)) === 'added 0') {
         yahtzeeChosen = true
@@ -724,12 +719,11 @@ document.querySelector('#chance').addEventListener('click', () => {
   }
   if (chanceChosen === false) {
     currentScore += checkChance(chosenDice)
-    scoreDisplay.innerHTML = `Current Score: ${currentScore}`
+    playerOneScoreDisplay.innerHTML = `Current Score: ${currentScore}`
     nextTurn()
     chanceChosen = true
     document.querySelector('#chance').style.backgroundColor = 'gray'
     document.querySelector('#chance').style.textDecoration = 'line-through'
-    console.log(score)
   } else {
     message.innerHTML = ''
     typeWriterCounter = 0
@@ -746,11 +740,13 @@ document.querySelector('#roll').addEventListener('click', () => {
 })
 document.querySelector('#new-game').addEventListener('click', () => {
   newGame()
-  console.log('clicked')
   message.innerHTML = ''
   txt = 'Click on ROLL to get the game going...'
   typeWriterCounter = 0
   typeWriter()
+})
+document.querySelector('#home').addEventListener('click', () => {
+  location.href = 'index.html'
 })
 
 // Event Listeners end
