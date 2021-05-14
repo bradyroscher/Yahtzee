@@ -35,6 +35,21 @@ let yahtzeeChosenP2 = false
 let chanceChosenP2 = false
 let gameOver = false
 let player = 1
+// let diceSound = new sound('sounds/roll-dice.mp3')
+
+let diceSound = document.createElement('audio')
+diceSound.src = 'sounds/roll-dice.mp3'
+let scoreSound = document.createElement('audio')
+scoreSound.src = 'sounds/score.mp3'
+let score0Sound = document.createElement('audio')
+score0Sound.src = 'sounds/0score.mp3'
+let need5Sound = document.createElement('audio')
+need5Sound.src = 'sounds/need-5.mp3'
+let winSound = document.createElement('audio')
+winSound.src = 'sounds/win.mp3'
+let dicePopSound = document.createElement('audio')
+dicePopSound.src = 'sounds/dice-pop.mp3'
+
 const gameBoard = document.querySelector('#board')
 const playerOneScoreDisplay = document.querySelector('#p1-score')
 const playerTwoScoreDisplay = document.querySelector('#p2-score')
@@ -46,6 +61,7 @@ const message = document.querySelector('#message')
 let typeWriterCounter = 0
 let txt = "Player 1, you're up first. Click roll to get started...BEEP"
 let speed = 45
+
 //_____Global variable end
 
 playerOneScoreDisplay.style.textDecoration = 'underline overline'
@@ -59,6 +75,7 @@ function typeWriter() {
     setTimeout(typeWriter, speed)
   }
 }
+
 typeWriter()
 const sumDice = (arr) => {
   let sum = 0
@@ -67,6 +84,7 @@ const sumDice = (arr) => {
   }
   return sum
 }
+
 const newGame = () => {
   chosenDice = []
   diceRolled = []
@@ -167,6 +185,7 @@ const newGame = () => {
   turnCounter.innerHTML = 'Turn: 1'
   rollCounter.innerHTML = 'Roll Count: 0'
 }
+
 const rollDice = () => {
   if (rollCount < 2) {
     message.innerHTML = ''
@@ -192,6 +211,8 @@ const rollDice = () => {
       diceDiv.innerHTML = `<img src=images/Dice-${die}.png>`
       gameBoard.appendChild(diceDiv)
       diceDiv.addEventListener('click', () => {
+        dicePopSound.pause()
+        dicePopSound.play()
         chosenDice.push(die)
         let choiceDiv = document.createElement('div')
         choiceDiv.innerHTML = `<img src=images/Dice-${die}.png>`
@@ -208,20 +229,24 @@ const rollDice = () => {
     return
   }
 }
+
 const nextTurn = () => {
   // if (comboChosen === true) {
   if (player === 2 && turnCount === 13) {
+    winSound.play
     if (playerOneScore > playerTwoScore) {
       message.innerHTML = ''
       typeWriterCounter = 0
       txt = 'BZZZZZ.....PLAYER 1 WINS!!'
       typeWriter()
+      winSound.play()
     }
     if (playerOneScore < playerTwoScore) {
       message.innerHTML = ''
       typeWriterCounter = 0
       txt = 'PLAYER 2 WINS....BEEeeEEEeeP'
       typeWriter()
+      winSound.play()
     }
     gameOver = true
     return
@@ -236,18 +261,17 @@ const nextTurn = () => {
     playerOneScoreDisplay.style.textDecoration = 'none'
     playerTwoScoreDisplay.style.textDecoration = 'underline overline'
     playerTwoScoreDisplay.style.border = 'outset darkgray'
-    playerOneScoreDisplay.style.border = 'insset darkgray'
+    playerOneScoreDisplay.style.border = 'inset darkgray'
   } else if (player === 2) {
     playerOneScoreDisplay.style.textDecoration = 'underline overline'
     playerTwoScoreDisplay.style.textDecoration = 'none'
     playerTwoScoreDisplay.style.border = 'inset darkgray'
-    playerOneScoreDisplay.style.border = 'outsset darkgray'
+    playerOneScoreDisplay.style.border = 'outset darkgray'
     turnCount++
     player = 1
     console.log(player)
   }
   console.log(turnCount)
-  // console.log(player)
   gameBoard.innerHTML = ''
   choiceParent.innerHTML = ''
   rollCounter.innerHTML = 'Roll Count: 0'
@@ -256,25 +280,44 @@ const nextTurn = () => {
   typeWriterCounter = 0
   txt = 'BEEP...TIME TO ROLL...BEEP'
   typeWriter()
-  // }
 }
+
 const addScore = (func) => {
+  let initialScoreP1 = 0
+  let initialScoreP2 = 0
+  initialScoreP1 = playerOneScore
+  initialScoreP2 = playerTwoScore
   if (player === 1) {
-    playerOneScore += func(chosenDice)
+    playerOneScore = playerOneScore + func(chosenDice)
     playerOneScoreDisplay.innerHTML = `Player 1: ${playerOneScore}`
+    if (playerOneScore !== initialScoreP1) {
+      scoreSound.play()
+    } else if (playerOneScore === initialScoreP1) {
+      score0Sound.play()
+    }
   } else if (player === 2) {
     playerTwoScore += func(chosenDice)
     playerTwoScoreDisplay.innerHTML = `Player 2: ${playerTwoScore}`
+    if (playerTwoScore !== initialScoreP2) {
+      scoreSound.play()
+    } else if (playerTwoScore === initialScoreP2) {
+      score0Sound.play()
+    }
   }
 }
-const confirm0 = (func, tf) => {
-  if (window.confirm(`This will add 0 to the score, is that ok?`)) {
-    nextTurn()
-    return 'added 0'
-  } else {
-    return
+
+const checkFor5Die = () => {
+  if (chosenDice.length < 5) {
+    message.innerHTML = ''
+    typeWriterCounter = 0
+    txt = "Make sure you've chosen 5 dice!"
+    typeWriter()
+    need5Sound.play()
+    return false
   }
+  return true
 }
+
 //_____Functions end
 //Functions for checking combos
 const checkOnes = (arr) => {
@@ -403,425 +446,376 @@ const checkChance = (arr) => {
 
 // Event Listeners
 document.querySelector('#ones').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && onesChosenP1 === true) ||
+      (player === 2 && onesChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkOnes)
+    if (player === 1) {
+      document.querySelector('#onesp1').style.color = 'white'
+      onesChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#onesp2').style.color = 'white'
+      onesChosenP2 = true
+      nextTurn()
+    }
+    if (onesChosenP1 === true && onesChosenP2 === true) {
+      document.querySelector('#ones').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && onesChosenP1 === true) ||
-    (player === 2 && onesChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkOnes)
-  if (player === 1) {
-    document.querySelector('#onesp1').style.color = 'white'
-    onesChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#onesp2').style.color = 'white'
-    onesChosenP2 = true
-    nextTurn()
-  }
-  if (onesChosenP1 === true && onesChosenP2 === true) {
-    document.querySelector('#ones').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#twos').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && twosChosenP1 === true) ||
+      (player === 2 && twosChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkTwos)
+    if (player === 1) {
+      document.querySelector('#twosp1').style.color = 'white'
+      twosChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#twosp2').style.color = 'white'
+      twosChosenP2 = true
+      nextTurn()
+    }
+    if (twosChosenP1 === true && twosChosenP2 === true) {
+      document.querySelector('#twos').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && twosChosenP1 === true) ||
-    (player === 2 && twosChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkTwos)
-  if (player === 1) {
-    document.querySelector('#twosp1').style.color = 'white'
-    twosChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#twosp2').style.color = 'white'
-    twosChosenP2 = true
-    nextTurn()
-  }
-  if (twosChosenP1 === true && twosChosenP2 === true) {
-    document.querySelector('#twos').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#threes').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && threesChosenP1 === true) ||
+      (player === 2 && threesChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkThrees)
+    if (player === 1) {
+      document.querySelector('#threesp1').style.color = 'white'
+      threesChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#threesp2').style.color = 'white'
+      threesChosenP2 = true
+      nextTurn()
+    }
+    if (threesChosenP1 === true && threesChosenP2 === true) {
+      document.querySelector('#threes').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && threesChosenP1 === true) ||
-    (player === 2 && threesChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkThrees)
-  if (player === 1) {
-    document.querySelector('#threesp1').style.color = 'white'
-    threesChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#threesp2').style.color = 'white'
-    threesChosenP2 = true
-    nextTurn()
-  }
-  if (threesChosenP1 === true && threesChosenP2 === true) {
-    document.querySelector('#threes').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#fours').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && foursChosenP1 === true) ||
+      (player === 2 && foursChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkFours)
+    if (player === 1) {
+      document.querySelector('#foursp1').style.color = 'white'
+      foursChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#foursp2').style.color = 'white'
+      foursChosenP2 = true
+      nextTurn()
+    }
+    if (foursChosenP1 === true && foursChosenP2 === true) {
+      document.querySelector('#fours').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && foursChosenP1 === true) ||
-    (player === 2 && foursChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkFours)
-  if (player === 1) {
-    document.querySelector('#foursp1').style.color = 'white'
-    foursChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#foursp2').style.color = 'white'
-    foursChosenP2 = true
-    nextTurn()
-  }
-  if (foursChosenP1 === true && foursChosenP2 === true) {
-    document.querySelector('#fours').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#fives').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && fivesChosenP1 === true) ||
+      (player === 2 && fivesChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkFives)
+    if (player === 1) {
+      document.querySelector('#fivesp1').style.color = 'white'
+      fivesChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#fivesp2').style.color = 'white'
+      fivesChosenP2 = true
+      nextTurn()
+    }
+    if (fivesChosenP1 === true && fivesChosenP2 === true) {
+      document.querySelector('#fives').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && fivesChosenP1 === true) ||
-    (player === 2 && fivesChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkFives)
-  if (player === 1) {
-    document.querySelector('#fivesp1').style.color = 'white'
-    fivesChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#fivesp2').style.color = 'white'
-    fivesChosenP2 = true
-    nextTurn()
-  }
-  if (fivesChosenP1 === true && fivesChosenP2 === true) {
-    document.querySelector('#fives').style.backgroundColor = 'gray'
-  }
+  return
 })
 
 document.querySelector('#sixes').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && sixesChosenP1 === true) ||
+      (player === 2 && sixesChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkSixes)
+    if (player === 1) {
+      document.querySelector('#sixesp1').style.color = 'white'
+      sixesChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#sixesp2').style.color = 'white'
+      sixesChosenP2 = true
+      nextTurn()
+    }
+    if (sixesChosenP1 === true && sixesChosenP2 === true) {
+      document.querySelector('#sixes').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && sixesChosenP1 === true) ||
-    (player === 2 && sixesChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkSixes)
-  if (player === 1) {
-    document.querySelector('#sixesp1').style.color = 'white'
-    sixesChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#sixesp2').style.color = 'white'
-    sixesChosenP2 = true
-    nextTurn()
-  }
-  if (sixesChosenP1 === true && sixesChosenP2 === true) {
-    document.querySelector('#sixes').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#three-of-kind').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && threeOfAKindChosenP1 === true) ||
+      (player === 2 && threeOfAKindChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(check3OfAKind)
+    if (player === 1) {
+      document.querySelector('#three-of-kindp1').style.color = 'white'
+      threeOfAKindChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#three-of-kindp2').style.color = 'white'
+      threeOfAKindChosenP2 = true
+      nextTurn()
+    }
+    if (threeOfAKindChosenP1 === true && threeOfAKindChosenP2 === true) {
+      document.querySelector('#three-of-kind').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && threeOfAKindChosenP1 === true) ||
-    (player === 2 && threeOfAKindChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(check3OfAKind)
-  if (player === 1) {
-    document.querySelector('#three-of-kindp1').style.color = 'white'
-    threeOfAKindChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#three-of-kindp2').style.color = 'white'
-    threeOfAKindChosenP2 = true
-    nextTurn()
-  }
-  if (threeOfAKindChosenP1 === true && threeOfAKindChosenP2 === true) {
-    document.querySelector('#three-of-kind').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#four-of-kind').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && fourOfAKindChosenP1 === true) ||
+      (player === 2 && fourOfAKindChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(check4OfAKind)
+    if (player === 1) {
+      document.querySelector('#four-of-kindp1').style.color = 'white'
+      fourOfAKindChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#four-of-kindp2').style.color = 'white'
+      fourOfAKindChosenP2 = true
+      nextTurn()
+    }
+    if (fourOfAKindChosenP1 === true && fourOfAKindChosenP2 === true) {
+      document.querySelector('#four-of-kind').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && fourOfAKindChosenP1 === true) ||
-    (player === 2 && fourOfAKindChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(check4OfAKind)
-  if (player === 1) {
-    document.querySelector('#four-of-kindp1').style.color = 'white'
-    fourOfAKindChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#four-of-kindp2').style.color = 'white'
-    fourOfAKindChosenP2 = true
-    nextTurn()
-  }
-  if (fourOfAKindChosenP1 === true && fourOfAKindChosenP2 === true) {
-    document.querySelector('#four-of-kind').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#fullhouse').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && fullHouseChosenP1 === true) ||
+      (player === 2 && fullHouseChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkFullHouse)
+    if (player === 1) {
+      document.querySelector('#fullhousep1').style.color = 'white'
+      fullHouseChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#fullhousep2').style.color = 'white'
+      fullHouseChosenP2 = true
+      nextTurn()
+    }
+    if (fullHouseChosenP1 === true && fullHouseChosenP2 === true) {
+      document.querySelector('#fullhouse').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && fullHouseChosenP1 === true) ||
-    (player === 2 && fullHouseChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkFullHouse)
-  if (player === 1) {
-    document.querySelector('#fullhousep1').style.color = 'white'
-    fullHouseChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#fullhousep2').style.color = 'white'
-    fullHouseChosenP2 = true
-    nextTurn()
-  }
-  if (fullHouseChosenP1 === true && fullHouseChosenP2 === true) {
-    document.querySelector('#fullhouse').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#small-straight').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
-  }
-  if (
-    (player === 1 && smallStraightChosenP1 === true) ||
-    (player === 2 && smallStraightChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkSmallStraight)
-  if (player === 1) {
-    document.querySelector('#small-straightp1').style.color = 'white'
-    smallStraightChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#small-straightp2').style.color = 'white'
-    smallStraightChosenP2 = true
-    nextTurn()
-  }
-  if (smallStraightChosenP1 === true && smallStraightChosenP2 === true) {
-    document.querySelector('#small-straight').style.backgroundColor = 'gray'
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && smallStraightChosenP1 === true) ||
+      (player === 2 && smallStraightChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkSmallStraight)
+    if (player === 1) {
+      document.querySelector('#small-straightp1').style.color = 'white'
+      smallStraightChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#small-straightp2').style.color = 'white'
+      smallStraightChosenP2 = true
+      nextTurn()
+    }
+    if (smallStraightChosenP1 === true && smallStraightChosenP2 === true) {
+      document.querySelector('#small-straight').style.backgroundColor = 'gray'
+    }
   }
 })
 document.querySelector('#large-straight').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && largeStraightChosenP1 === true) ||
+      (player === 2 && largeStraightChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkLargeStraight)
+    if (player === 1) {
+      document.querySelector('#large-straightp1').style.color = 'white'
+      largeStraightChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#large-straightp2').style.color = 'white'
+      largeStraightChosenP2 = true
+      nextTurn()
+    }
+    if (largeStraightChosenP1 === true && largeStraightChosenP2 === true) {
+      document.querySelector('#large-straight').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && largeStraightChosenP1 === true) ||
-    (player === 2 && largeStraightChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkLargeStraight)
-  if (player === 1) {
-    document.querySelector('#large-straightp1').style.color = 'white'
-    largeStraightChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#large-straightp2').style.color = 'white'
-    largeStraightChosenP2 = true
-    nextTurn()
-  }
-  if (largeStraightChosenP1 === true && largeStraightChosenP2 === true) {
-    document.querySelector('#large-straight').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#yahtzee').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && yahtzeeChosenP1 === true) ||
+      (player === 2 && yahtzeeChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkYahtzee)
+    if (player === 1) {
+      document.querySelector('#yahtzeep1').style.color = 'white'
+      yahtzeeChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#yahtzeep2').style.color = 'white'
+      yahtzeeChosenP2 = true
+      nextTurn()
+    }
+    if (yahtzeeChosenP1 === true && yahtzeeChosenP2 === true) {
+      document.querySelector('#yahtzee').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && yahtzeeChosenP1 === true) ||
-    (player === 2 && yahtzeeChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkYahtzee)
-  if (player === 1) {
-    document.querySelector('#yahtzeep1').style.color = 'white'
-    yahtzeeChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#yahtzeep2').style.color = 'white'
-    yahtzeeChosenP2 = true
-    nextTurn()
-  }
-  if (yahtzeeChosenP1 === true && yahtzeeChosenP2 === true) {
-    document.querySelector('#yahtzee').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#chance').addEventListener('click', () => {
-  if (chosenDice.length < 5) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = "Make sure you've chosen 5 dice!"
-    typeWriter()
-    return
+  if (checkFor5Die() === true) {
+    if (
+      (player === 1 && chanceChosenP1 === true) ||
+      (player === 2 && chanceChosenP2 === true)
+    ) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'You have already used this combo, choose another!'
+      typeWriter()
+      return
+    }
+    addScore(checkChance)
+    if (player === 1) {
+      document.querySelector('#chancep1').style.color = 'white'
+      chanceChosenP1 = true
+      nextTurn()
+    } else if (player === 2) {
+      document.querySelector('#chancep2').style.color = 'white'
+      chanceChosenP2 = true
+      nextTurn()
+    }
+    if (chanceChosenP1 === true && chanceChosenP2 === true) {
+      document.querySelector('#chance').style.backgroundColor = 'gray'
+    }
   }
-  if (
-    (player === 1 && chanceChosenP1 === true) ||
-    (player === 2 && chanceChosenP2 === true)
-  ) {
-    message.innerHTML = ''
-    typeWriterCounter = 0
-    txt = 'You have already used this combo, choose another!'
-    typeWriter()
-    return
-  }
-  addScore(checkChance)
-  if (player === 1) {
-    document.querySelector('#chancep1').style.color = 'white'
-    chanceChosenP1 = true
-    nextTurn()
-  } else if (player === 2) {
-    document.querySelector('#chancep2').style.color = 'white'
-    chanceChosenP2 = true
-    nextTurn()
-  }
-  if (chanceChosenP1 === true && chanceChosenP2 === true) {
-    document.querySelector('#chance').style.backgroundColor = 'gray'
-  }
+  return
 })
 document.querySelector('#roll').addEventListener('click', () => {
   if (gameOver === true) {
     return
+  }
+  if (diceToRoll > 0 && rollCount < 3) {
+    diceSound.pause()
+    diceSound.play()
   }
   rollDice()
 })

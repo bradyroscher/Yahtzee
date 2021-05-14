@@ -1,5 +1,5 @@
 body {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'VT323', monospace;
   background-color: #004284;
   background-repeat: no-repeat;
   background-size: cover;
@@ -10,6 +10,11 @@ body {
   align-items: center;
   flex-direction: column;
   margin-bottom: 50px;
+  overscroll-behavior-y: none;
+}
+h3 {
+  font-size: 60px;
+  text-decoration: underline;
 }
 header {
   background-image: url('images/metallic.jpeg');
@@ -44,10 +49,11 @@ header {
 }
 h1 {
   margin-top: 100px;
-  background-color: black;
+  background-color: gray;
   width: 200px;
   border: 3px outset darkgray;
   border-radius: 15px;
+  font-family: 'Orbitron', sans-serif;
 }
 
 h2 {
@@ -64,17 +70,17 @@ h2 {
 }
 p {
   width: 70vw;
-  font-size: 25px;
+  font-size: 35px;
   text-align: left;
 }
 p2 {
   display: block;
-  font-size: 25px;
+  font-size: 35px;
   width: 50vw;
 }
 p3 {
   width: 70vw;
-  font-size: 25px;
+  font-size: 35px;
   text-align: left;
 }
 img {
