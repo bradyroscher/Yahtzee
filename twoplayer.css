@@ -124,6 +124,7 @@ main {
   grid-template-columns: 100%;
   grid-template-rows: 60% 30%;
   justify-content: center;
+  margin-bottom: 20px;
 }
 .combo {
   font-size: 14px;

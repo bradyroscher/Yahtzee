@@ -33,6 +33,7 @@ let smallStraightChosenP2 = false
 let largeStraightChosenP2 = false
 let yahtzeeChosenP2 = false
 let chanceChosenP2 = false
+let gameOver = false
 let player = 1
 const gameBoard = document.querySelector('#board')
 const playerOneScoreDisplay = document.querySelector('#p1-score')
@@ -42,15 +43,14 @@ const choiceParent = document.querySelector('#chosen-dice')
 const turnCounter = document.querySelector('#turn-counter')
 const rollCounter = document.querySelector('#roll-counter')
 const message = document.querySelector('#message')
-
 let typeWriterCounter = 0
 let txt = "Player 1, you're up first. Click roll to get started...BEEP"
 let speed = 45
+//_____Global variable end
 
 playerOneScoreDisplay.style.textDecoration = 'underline overline'
 playerTwoScoreDisplay.style.border = 'inset darkgray'
 
-//_____Global variable end
 //Funtions (non combo checking)
 function typeWriter() {
   if (typeWriterCounter < txt.length) {
@@ -68,30 +68,42 @@ const sumDice = (arr) => {
   return sum
 }
 const newGame = () => {
-  if (playerOneScore > highScore) {
-    highScore = playerOneScore
-    playerTwoScoreDisplay.innerHTML = `High Score: ${highScore}`
-  }
   chosenDice = []
   diceRolled = []
   playerOneScore = 0
+  playerTwoScore = 0
   diceToRoll = 5
   rollCount = 0
   turnCount = 1
-  comboChosen = false
-  onesChosen = false
-  twosChosen = false
-  threesChosen = false
-  foursChosen = false
-  fivesChosen = false
-  sixesChosen = false
-  threeOfAKindChosen = false
-  fourOfAKindChosen = false
-  fullHouseChosen = false
-  smallStraightChosen = false
-  largeStraightChosen = false
-  yahtzeeChosen = false
-  chanceChosen = false
+  comboChosenP1 = false
+  onesChosenP1 = false
+  twosChosenP1 = false
+  threesChosenP1 = false
+  foursChosenP1 = false
+  fivesChosenP1 = false
+  sixesChosenP1 = false
+  threeOfAKindChosenP1 = false
+  fourOfAKindChosenP1 = false
+  fullHouseChosenP1 = false
+  smallStraightChosenP1 = false
+  largeStraightChosenP1 = false
+  yahtzeeChosenP1 = false
+  chanceChosenP1 = false
+  onesChosenP2 = false
+  twosChosenP2 = false
+  threesChosenP2 = false
+  foursChosenP2 = false
+  fivesChosenP2 = false
+  sixesChosenP2 = false
+  threeOfAKindChosenP2 = false
+  fourOfAKindChosenP2 = false
+  fullHouseChosenP2 = false
+  smallStraightChosenP2 = false
+  largeStraightChosenP2 = false
+  yahtzeeChosenP2 = false
+  chanceChosenP2 = false
+  gameOver = false
+  player = 1
   document.querySelector('#ones').style.textDecoration = ''
   document.querySelector('#twos').style.textDecoration = 'none'
   document.querySelector('#threes').style.textDecoration = 'none'
@@ -105,7 +117,6 @@ const newGame = () => {
   document.querySelector('#large-straight').style.textDecoration = 'none'
   document.querySelector('#yahtzee').style.textDecoration = 'none'
   document.querySelector('#chance').style.textDecoration = 'none'
-
   document.querySelector('#ones').style.backgroundColor = 'black'
   document.querySelector('#twos').style.backgroundColor = 'black'
   document.querySelector('#threes').style.backgroundColor = 'black'
@@ -119,7 +130,38 @@ const newGame = () => {
   document.querySelector('#large-straight').style.backgroundColor = 'black'
   document.querySelector('#yahtzee').style.backgroundColor = 'black'
   document.querySelector('#chance').style.backgroundColor = 'black'
+  document.querySelector('#onesp1').style.color = 'black'
+  document.querySelector('#twosp1').style.color = 'black'
+  document.querySelector('#threesp1').style.color = 'black'
+  document.querySelector('#foursp1').style.color = 'black'
+  document.querySelector('#fivesp1').style.color = 'black'
+  document.querySelector('#sixesp1').style.color = 'black'
+  document.querySelector('#three-of-kindp1').style.color = 'black'
+  document.querySelector('#four-of-kindp1').style.color = 'black'
+  document.querySelector('#fullhousep1').style.color = 'black'
+  document.querySelector('#small-straightp1').style.color = 'black'
+  document.querySelector('#large-straightp1').style.color = 'black'
+  document.querySelector('#yahtzeep1').style.color = 'black'
+  document.querySelector('#chancep1').style.color = 'black'
+  document.querySelector('#onesp2').style.color = 'black'
+  document.querySelector('#twosp2').style.color = 'black'
+  document.querySelector('#threesp2').style.color = 'black'
+  document.querySelector('#foursp2').style.color = 'black'
+  document.querySelector('#fivesp2').style.color = 'black'
+  document.querySelector('#sixesp2').style.color = 'black'
+  document.querySelector('#three-of-kindp2').style.color = 'black'
+  document.querySelector('#four-of-kindp2').style.color = 'black'
+  document.querySelector('#fullhousep2').style.color = 'black'
+  document.querySelector('#small-straightp2').style.color = 'black'
+  document.querySelector('#large-straightp2').style.color = 'black'
+  document.querySelector('#yahtzeep2').style.color = 'black'
+  document.querySelector('#chancep2').style.color = 'black'
+  playerOneScoreDisplay.style.textDecoration = 'underline overline'
+  playerTwoScoreDisplay.style.textDecoration = 'none'
+  playerTwoScoreDisplay.style.border = 'inset darkgray'
+  playerOneScoreDisplay.style.border = 'outsset darkgray'
   playerOneScoreDisplay.innerHTML = 'Player 1: 0'
+  playerTwoScoreDisplay.innerHTML = 'Player 2: 0'
   gameBoard.innerHTML = ''
   choiceParent.innerHTML = ''
   turnCounter.innerHTML = 'Turn: 1'
@@ -168,6 +210,22 @@ const rollDice = () => {
 }
 const nextTurn = () => {
   // if (comboChosen === true) {
+  if (player === 2 && turnCount === 13) {
+    if (playerOneScore > playerTwoScore) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'BZZZZZ.....PLAYER 1 WINS!!'
+      typeWriter()
+    }
+    if (playerOneScore < playerTwoScore) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'PLAYER 2 WINS....BEEeeEEEeeP'
+      typeWriter()
+    }
+    gameOver = true
+    return
+  }
   diceToRoll = 5
   chosenDice = []
   dice = []
@@ -526,11 +584,11 @@ document.querySelector('#sixes').addEventListener('click', () => {
   addScore(checkSixes)
   if (player === 1) {
     document.querySelector('#sixesp1').style.color = 'white'
-    onesChosenP1 = true
+    sixesChosenP1 = true
     nextTurn()
   } else if (player === 2) {
     document.querySelector('#sixesp2').style.color = 'white'
-    onesChosenP2 = true
+    sixesChosenP2 = true
     nextTurn()
   }
   if (sixesChosenP1 === true && sixesChosenP2 === true) {
@@ -762,16 +820,15 @@ document.querySelector('#chance').addEventListener('click', () => {
   }
 })
 document.querySelector('#roll').addEventListener('click', () => {
+  if (gameOver === true) {
+    return
+  }
   rollDice()
-  // message.innerHTML = ''
-  // txt = 'Click on a die to keep it, you can roll again if you need to...BEEP'
-  // typeWriterCounter = 0
-  // typeWriter()
 })
 document.querySelector('#new-game').addEventListener('click', () => {
   newGame()
   message.innerHTML = ''
-  txt = 'Click on ROLL to get the game going...'
+  txt = "Player 1, you're up first. Click roll to get started...BEEP"
   typeWriterCounter = 0
   typeWriter()
 })
