@@ -16,7 +16,7 @@ const resetVariable = () => {
   threeOfAKindChosen = false
   fourOfAKindChosen = false
   fullHouseChosen = false
-  smallStraightChosen = false
+  smallStaightChosen = false
   largeStraightChosen = false
   yahtzeeChosen = false
   chanceChosen = false
@@ -42,9 +42,9 @@ let speed = 45
 let diceSound = document.createElement('audio')
 diceSound.src = 'sounds/roll-dice.mp3'
 let scoreSound = document.createElement('audio')
-scoreSound.src = 'sounds/score.mp3'
+scoreSound.src = 'sounds/score.wav'
 let score0Sound = document.createElement('audio')
-score0Sound.src = 'sounds/0score.mp3'
+score0Sound.src = 'sounds/0score.wav'
 let need5Sound = document.createElement('audio')
 need5Sound.src = 'sounds/need-5.wav'
 let winSound = document.createElement('audio')
@@ -187,6 +187,7 @@ const nextTurn = () => {
       txt = 'Nice score! but you can do better...BEEP'
       typeWriter()
     }
+    gameOver = true
     return
   }
   diceToRoll = 5
@@ -218,9 +219,10 @@ const checkFor5Die = () => {
 }
 
 const comboChosenMessage = () => {
+  need5Sound.play()
   message.innerHTML = ''
   typeWriterCounter = 0
-  txt = 'Combo already chose, choose another!'
+  txt = 'You have already used this combo, choose another!'
   typeWriter()
   return
 }
@@ -485,12 +487,13 @@ document.querySelector('#fullhouse').addEventListener('click', () => {
 
 document.querySelector('#small-straight').addEventListener('click', () => {
   if (checkFor5Die() === true) {
-    if (smallStraightChosen === false) {
+    if (smallStaightChosen === false) {
       addScore(checkSmallStraight)
       smallStaightChosen = true
       document.querySelector('#small-straight').style.backgroundColor = 'gray'
       document.querySelector('#small-straight').style.textDecoration =
         'line-through'
+      console.log(smallStaightChosen)
     } else {
       comboChosenMessage()
     }
@@ -502,7 +505,7 @@ document.querySelector('#large-straight').addEventListener('click', () => {
   if (checkFor5Die() === true) {
     if (largeStraightChosen === false) {
       addScore(checkLargeStraight)
-      smallStaightChosen = true
+      largeStraightChosen = true
       document.querySelector('#large-straight').style.backgroundColor = 'gray'
       document.querySelector('#large-straight').style.textDecoration =
         'line-through'

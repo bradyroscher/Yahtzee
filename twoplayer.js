@@ -40,9 +40,9 @@ let player = 1
 let diceSound = document.createElement('audio')
 diceSound.src = 'sounds/roll-dice.mp3'
 let scoreSound = document.createElement('audio')
-scoreSound.src = 'sounds/score.mp3'
+scoreSound.src = 'sounds/score.wav'
 let score0Sound = document.createElement('audio')
-score0Sound.src = 'sounds/0score.mp3'
+score0Sound.src = 'sounds/0score.wav'
 let need5Sound = document.createElement('audio')
 need5Sound.src = 'sounds/need-5.wav'
 let winSound = document.createElement('audio')
@@ -68,7 +68,7 @@ playerOneScoreDisplay.style.textDecoration = 'underline overline'
 playerTwoScoreDisplay.style.border = 'inset darkgray'
 
 //Funtions (non combo checking)
-function typeWriter() {
+const typeWriter = () => {
   if (typeWriterCounter < txt.length) {
     message.innerHTML += txt.charAt(typeWriterCounter)
     typeWriterCounter++
@@ -320,6 +320,15 @@ const checkFor5Die = () => {
   return true
 }
 
+const comboChosenMessage = () => {
+  need5Sound.play()
+  message.innerHTML = ''
+  typeWriterCounter = 0
+  txt = 'You have already used this combo, choose another!'
+  typeWriter()
+  return
+}
+
 //_____Functions end
 //Functions for checking combos
 const checkOnes = (arr) => {
@@ -453,10 +462,7 @@ document.querySelector('#ones').addEventListener('click', () => {
       (player === 1 && onesChosenP1 === true) ||
       (player === 2 && onesChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkOnes)
@@ -481,10 +487,7 @@ document.querySelector('#twos').addEventListener('click', () => {
       (player === 1 && twosChosenP1 === true) ||
       (player === 2 && twosChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkTwos)
@@ -509,10 +512,7 @@ document.querySelector('#threes').addEventListener('click', () => {
       (player === 1 && threesChosenP1 === true) ||
       (player === 2 && threesChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkThrees)
@@ -537,10 +537,7 @@ document.querySelector('#fours').addEventListener('click', () => {
       (player === 1 && foursChosenP1 === true) ||
       (player === 2 && foursChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkFours)
@@ -565,10 +562,7 @@ document.querySelector('#fives').addEventListener('click', () => {
       (player === 1 && fivesChosenP1 === true) ||
       (player === 2 && fivesChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkFives)
@@ -594,10 +588,7 @@ document.querySelector('#sixes').addEventListener('click', () => {
       (player === 1 && sixesChosenP1 === true) ||
       (player === 2 && sixesChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkSixes)
@@ -622,10 +613,7 @@ document.querySelector('#three-of-kind').addEventListener('click', () => {
       (player === 1 && threeOfAKindChosenP1 === true) ||
       (player === 2 && threeOfAKindChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(check3OfAKind)
@@ -650,10 +638,7 @@ document.querySelector('#four-of-kind').addEventListener('click', () => {
       (player === 1 && fourOfAKindChosenP1 === true) ||
       (player === 2 && fourOfAKindChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(check4OfAKind)
@@ -678,10 +663,7 @@ document.querySelector('#fullhouse').addEventListener('click', () => {
       (player === 1 && fullHouseChosenP1 === true) ||
       (player === 2 && fullHouseChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkFullHouse)
@@ -706,10 +688,7 @@ document.querySelector('#small-straight').addEventListener('click', () => {
       (player === 1 && smallStraightChosenP1 === true) ||
       (player === 2 && smallStraightChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkSmallStraight)
@@ -733,10 +712,7 @@ document.querySelector('#large-straight').addEventListener('click', () => {
       (player === 1 && largeStraightChosenP1 === true) ||
       (player === 2 && largeStraightChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkLargeStraight)
@@ -761,10 +737,7 @@ document.querySelector('#yahtzee').addEventListener('click', () => {
       (player === 1 && yahtzeeChosenP1 === true) ||
       (player === 2 && yahtzeeChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkYahtzee)
@@ -789,10 +762,7 @@ document.querySelector('#chance').addEventListener('click', () => {
       (player === 1 && chanceChosenP1 === true) ||
       (player === 2 && chanceChosenP2 === true)
     ) {
-      message.innerHTML = ''
-      typeWriterCounter = 0
-      txt = 'You have already used this combo, choose another!'
-      typeWriter()
+      comboChosenMessage()
       return
     }
     addScore(checkChance)
