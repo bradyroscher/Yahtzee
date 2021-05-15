@@ -1,25 +1,31 @@
 //Global variables
-let chosenDice = []
-let diceRolled = []
-let currentScore = 0
-let highScore = 0
-let diceToRoll = 5
-let rollCount = 0
-let turnCount = 1
-let comboChosen = false
-let onesChosen = false
-let twosChosen = false
-let threesChosen = false
-let foursChosen = false
-let fivesChosen = false
-let sixesChosen = false
-let threeOfAKindChosen = false
-let fourOfAKindChosen = false
-let fullHouseChosen = false
-let smallStraightChosen = false
-let largeStraightChosen = false
-let yahtzeeChosen = false
-let chanceChosen = false
+const resetVariable = () => {
+  chosenDice = []
+  diceRolled = []
+  currentScore = 0
+  diceToRoll = 5
+  rollCount = 0
+  turnCount = 1
+  comboChosen = false
+  onesChosen = false
+  twosChosen = false
+  threesChosen = false
+  foursChosen = false
+  fivesChosen = false
+  sixesChosen = false
+  threeOfAKindChosen = false
+  fourOfAKindChosen = false
+  fullHouseChosen = false
+  smallStraightChosen = false
+  largeStraightChosen = false
+  yahtzeeChosen = false
+  chanceChosen = false
+  gameOver = false
+}
+resetVariable()
+highScore = 0
+console.log(turnCount)
+
 const gameBoard = document.querySelector('#board')
 const playerOneScoreDisplay = document.querySelector('#score')
 const twos = document.querySelector('#twos')
@@ -40,7 +46,7 @@ scoreSound.src = 'sounds/score.mp3'
 let score0Sound = document.createElement('audio')
 score0Sound.src = 'sounds/0score.mp3'
 let need5Sound = document.createElement('audio')
-need5Sound.src = 'sounds/need-5.mp3'
+need5Sound.src = 'sounds/need-5.wav'
 let winSound = document.createElement('audio')
 winSound.src = 'sounds/win.mp3'
 let dicePopSound = document.createElement('audio')
@@ -71,26 +77,7 @@ const newGame = () => {
     highScore = currentScore
     playerTwoScoreDisplay.innerHTML = `High Score: ${highScore}`
   }
-  chosenDice = []
-  diceRolled = []
-  currentScore = 0
-  diceToRoll = 5
-  rollCount = 0
-  turnCount = 1
-  comboChosen = false
-  onesChosen = false
-  twosChosen = false
-  threesChosen = false
-  foursChosen = false
-  fivesChosen = false
-  sixesChosen = false
-  threeOfAKindChosen = false
-  fourOfAKindChosen = false
-  fullHouseChosen = false
-  smallStraightChosen = false
-  largeStraightChosen = false
-  yahtzeeChosen = false
-  chanceChosen = false
+  resetVariable()
   document.querySelector('#ones').style.textDecoration = ''
   document.querySelector('#twos').style.textDecoration = 'none'
   document.querySelector('#threes').style.textDecoration = 'none'
@@ -150,6 +137,8 @@ const rollDice = () => {
       diceDiv.innerHTML = `<img src=images/Dice-${die}.png>`
       gameBoard.appendChild(diceDiv)
       diceDiv.addEventListener('click', () => {
+        dicePopSound.pause()
+        dicePopSound.play()
         chosenDice.push(die)
         let choiceDiv = document.createElement('div')
         choiceDiv.innerHTML = `<img src=images/Dice-${die}.png>`
@@ -160,6 +149,8 @@ const rollDice = () => {
       })
     }
   } else {
+    need5Sound.pause()
+    need5Sound.play()
     message.innerHTML = ''
     typeWriterCounter = 0
     txt = 'BEEP...Your 3 rolls are up, select all die and choose a combo...'
@@ -178,10 +169,26 @@ const addScore = (func) => {
   } else if (currentScore === initialScore) {
     score0Sound.play()
   }
+  nextTurn()
 }
 
 const nextTurn = () => {
   // if (comboChosen === true) {
+  if (turnCount === 13) {
+    winSound.play()
+    if (currentScore > highScore) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'NEW HIGH SCORE....BEEEeeEEEeP'
+      typeWriter()
+    } else if (currentScore < highScore) {
+      message.innerHTML = ''
+      typeWriterCounter = 0
+      txt = 'Nice score! but you can do better...BEEP'
+      typeWriter()
+    }
+    return
+  }
   diceToRoll = 5
   chosenDice = []
   dice = []
@@ -196,15 +203,6 @@ const nextTurn = () => {
   txt = 'BEEP...TIME TO ROLL...BEEP'
   typeWriter()
   // }
-}
-
-const confirm0 = (func, tf) => {
-  if (window.confirm(`This will add 0 to the score, is that ok?`)) {
-    nextTurn()
-    return 'added 0'
-  } else {
-    return
-  }
 }
 
 const checkFor5Die = () => {
@@ -282,7 +280,7 @@ const check3OfAKind = (arr) => {
       return sumDice(arr)
     }
   }
-  return 'Not a 3 of a kind!'
+  return 0
 }
 const check4OfAKind = (arr) => {
   let sortedArr = arr.sort()
@@ -295,7 +293,7 @@ const check4OfAKind = (arr) => {
       return sumDice(arr)
     }
   }
-  return 'Not a 4 of a kind!'
+  return 0
 }
 const checkFullHouse = (arr) => {
   let sortedArr = arr.sort()
@@ -309,7 +307,7 @@ const checkFullHouse = (arr) => {
   ) {
     return 25
   }
-  return 'Not a Fullhouse!'
+  return 0
 }
 const checkSmallStraight = (arr) => {
   let trimedDice = [...new Set(arr)]
@@ -325,7 +323,7 @@ const checkSmallStraight = (arr) => {
   ) {
     return 30
   }
-  return 'Not a small straight!'
+  return 0
 }
 const checkLargeStraight = (arr) => {
   let sortedArr = arr.sort()
@@ -338,7 +336,7 @@ const checkLargeStraight = (arr) => {
   ) {
     return 40
   }
-  return 'Not a large straight!'
+  return 0
 }
 const checkYahtzee = (arr) => {
   if (
@@ -349,7 +347,7 @@ const checkYahtzee = (arr) => {
   ) {
     return 50
   }
-  return 'Not a Yahtzee!'
+  return 0
 }
 const checkChance = (arr) => {
   return sumDice(arr)
@@ -544,11 +542,18 @@ document.querySelector('#chance').addEventListener('click', () => {
 })
 
 document.querySelector('#roll').addEventListener('click', () => {
-  rollDice()
+  if (gameOver === true) {
+    need5Sound.play()
+    return
+  }
+  if (turnCount === 14) {
+    return
+  }
   if (diceToRoll > 0 && rollCount < 3) {
     diceSound.pause()
     diceSound.play()
   }
+  rollDice()
 })
 document.querySelector('#new-game').addEventListener('click', () => {
   newGame()

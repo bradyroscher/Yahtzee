@@ -44,7 +44,7 @@ scoreSound.src = 'sounds/score.mp3'
 let score0Sound = document.createElement('audio')
 score0Sound.src = 'sounds/0score.mp3'
 let need5Sound = document.createElement('audio')
-need5Sound.src = 'sounds/need-5.mp3'
+need5Sound.src = 'sounds/need-5.wav'
 let winSound = document.createElement('audio')
 winSound.src = 'sounds/win.mp3'
 let dicePopSound = document.createElement('audio')
@@ -75,8 +75,8 @@ function typeWriter() {
     setTimeout(typeWriter, speed)
   }
 }
-
 typeWriter()
+
 const sumDice = (arr) => {
   let sum = 0
   for (i = 0; i < arr.length; i++) {
@@ -222,6 +222,8 @@ const rollDice = () => {
       })
     }
   } else {
+    need5Sound.pause()
+    need5Sound.play()
     message.innerHTML = ''
     typeWriterCounter = 0
     txt = 'BEEP...Your 3 rolls are up, select all die and choose a combo...'
@@ -811,6 +813,7 @@ document.querySelector('#chance').addEventListener('click', () => {
 })
 document.querySelector('#roll').addEventListener('click', () => {
   if (gameOver === true) {
+    need5Sound.play()
     return
   }
   if (diceToRoll > 0 && rollCount < 3) {
@@ -826,6 +829,7 @@ document.querySelector('#new-game').addEventListener('click', () => {
   typeWriterCounter = 0
   typeWriter()
 })
+
 document.querySelector('#home').addEventListener('click', () => {
   location.href = 'index.html'
 })

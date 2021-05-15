@@ -27,7 +27,8 @@ header {
   color: white;
   padding: 7px;
   text-align: center;
-  width: 189px;
+  width: 98%;
+  margin-left: 10px;
   font-size: 22px;
 }
 #p2-score {
@@ -36,7 +37,7 @@ header {
   background-color: grey;
   color: white;
   /* height: 65px; */
-  width: 240px;
+  width: 20%;
   text-align: center;
   padding: 17px;
 }
@@ -46,7 +47,7 @@ header {
   background-color: grey;
   color: white;
   /* height: 65px; */
-  width: 280px;
+  width: 20%;
   text-align: center;
   padding: 17px;
 }
@@ -71,6 +72,9 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+}
+#chance {
+  margin-bottom: 15px;
 }
 #section2 {
   height: 100%;
@@ -134,7 +138,7 @@ main {
   height: 20px;
   vertical-align: center;
   margin: auto;
-  width: 180px;
+  width: 79%;
   padding: 10px;
   border-radius: 15px;
   background-color: black;
@@ -225,4 +229,19 @@ main {
 
 #home:hover {
   border: inset darkgray;
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+.die {
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 450ms;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: linear;
 }
