@@ -24,7 +24,6 @@ const resetVariable = () => {
 }
 resetVariable()
 highScore = 0
-console.log(turnCount)
 
 const gameBoard = document.querySelector('#board')
 const playerOneScoreDisplay = document.querySelector('#score')
@@ -143,7 +142,6 @@ const rollDice = () => {
         let choiceDiv = document.createElement('div')
         choiceDiv.innerHTML = `<img src=Dice-${die}.png>`
         choiceParent.appendChild(choiceDiv)
-        console.log(chosenDice)
         diceDiv.parentNode.removeChild(diceDiv)
         diceToRoll -= 1
       })
@@ -234,7 +232,6 @@ const checkOnes = (arr) => {
   for (i = 0; i < arr.length; i++) {
     if (arr[i] === 1) score += 1
   }
-  console.log(score)
   return score
 }
 const checkTwos = (arr) => {
@@ -314,7 +311,6 @@ const checkFullHouse = (arr) => {
 const checkSmallStraight = (arr) => {
   let trimedDice = [...new Set(arr)]
   let sortedArr = trimedDice.sort()
-  console.log(sortedArr)
   if (
     (sortedArr[0] === sortedArr[1] - 1 &&
       sortedArr[0] === sortedArr[2] - 2 &&
@@ -329,7 +325,6 @@ const checkSmallStraight = (arr) => {
 }
 const checkLargeStraight = (arr) => {
   let sortedArr = arr.sort()
-  console.log(sortedArr)
   if (
     sortedArr[0] === sortedArr[1] - 1 &&
     sortedArr[0] === sortedArr[2] - 2 &&
@@ -493,7 +488,6 @@ document.querySelector('#small-straight').addEventListener('click', () => {
       document.querySelector('#small-straight').style.backgroundColor = 'gray'
       document.querySelector('#small-straight').style.textDecoration =
         'line-through'
-      console.log(smallStaightChosen)
     } else {
       comboChosenMessage()
     }
@@ -560,7 +554,6 @@ document.querySelector('#roll').addEventListener('click', () => {
 })
 document.querySelector('#new-game').addEventListener('click', () => {
   newGame()
-  console.log('clicked')
   message.innerHTML = ''
   txt = 'Click on ROLL to get the game going...'
   typeWriterCounter = 0

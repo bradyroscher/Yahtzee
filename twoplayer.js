@@ -259,7 +259,6 @@ const nextTurn = () => {
   rollCount = 0
   if (player === 1) {
     player = 2
-    console.log(player)
     playerOneScoreDisplay.style.textDecoration = 'none'
     playerTwoScoreDisplay.style.textDecoration = 'underline overline'
     playerTwoScoreDisplay.style.border = 'outset darkgray'
@@ -271,9 +270,7 @@ const nextTurn = () => {
     playerOneScoreDisplay.style.border = 'outset darkgray'
     turnCount++
     player = 1
-    console.log(player)
   }
-  console.log(turnCount)
   gameBoard.innerHTML = ''
   choiceParent.innerHTML = ''
   rollCounter.innerHTML = 'Roll Count: 0'
