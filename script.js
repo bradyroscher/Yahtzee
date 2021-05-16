@@ -40,17 +40,17 @@ let txt = 'Click on ROLL to get the game going...'
 let speed = 45
 
 let diceSound = document.createElement('audio')
-diceSound.src = 'sounds/roll-dice.mp3'
+diceSound.src = 'roll-dice.mp3'
 let scoreSound = document.createElement('audio')
-scoreSound.src = 'sounds/score.wav'
+scoreSound.src = 'score.wav'
 let score0Sound = document.createElement('audio')
-score0Sound.src = 'sounds/0score.wav'
+score0Sound.src = '0score.wav'
 let need5Sound = document.createElement('audio')
-need5Sound.src = 'sounds/need-5.wav'
+need5Sound.src = 'need-5.wav'
 let winSound = document.createElement('audio')
-winSound.src = 'sounds/win.mp3'
+winSound.src = 'win.mp3'
 let dicePopSound = document.createElement('audio')
-dicePopSound.src = 'sounds/dice-pop.mp3'
+dicePopSound.src = 'dice-pop.mp3'
 
 //_____Global variable end
 //Funtions (non combo checking)
@@ -134,14 +134,14 @@ const rollDice = () => {
       diceRolled.push(die)
       let diceDiv = document.createElement('div')
       diceDiv.setAttribute('class', `die`)
-      diceDiv.innerHTML = `<img src=images/Dice-${die}.png>`
+      diceDiv.innerHTML = `<img src=Dice-${die}.png>`
       gameBoard.appendChild(diceDiv)
       diceDiv.addEventListener('click', () => {
         dicePopSound.pause()
         dicePopSound.play()
         chosenDice.push(die)
         let choiceDiv = document.createElement('div')
-        choiceDiv.innerHTML = `<img src=images/Dice-${die}.png>`
+        choiceDiv.innerHTML = `<img src=Dice-${die}.png>`
         choiceParent.appendChild(choiceDiv)
         console.log(chosenDice)
         diceDiv.parentNode.removeChild(diceDiv)

@@ -17,7 +17,7 @@ h3 {
   text-decoration: underline;
 }
 header {
-  background-image: url('images/metallic.jpeg');
+  background-image: url('metallic.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
   height: 10vh;
@@ -86,4 +86,7 @@ p3 {
 img {
   margin-top: 30px;
   margin-bottom: 30px;
+}
+button {
+  cursor: pointer;
 }
