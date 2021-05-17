@@ -120,7 +120,7 @@ const rollDice = () => {
   } else {
     message.innerHTML = ''
     typeWriterCounter = 0
-    txt = 'BEEP...Your 3 rolls are up, select all die and choose a combo...'
+    txt = 'BEEP...Your 3 rolls are up, select all dice and choose a combo...'
     typeWriter()
   }
   if (rollCount < 3) {
