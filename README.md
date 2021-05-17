@@ -11,7 +11,7 @@ ___
 ___
 ## Description
 ___
-#### Robahtzee is a JavaScript Yahtzee game I've made for a school project. Making use of HTML, CSS and JavaScript, I've created a fully functional game with replayability. Even after completion there's a few features to be added. Some I've already done, like the two-player mode, and some that will be an interesting challenge to come back too, like the CPU-mode.
+ Robahtzee is a JavaScript Yahtzee game I've made for a school project. Making use of HTML, CSS and JavaScript, I've created a fully functional game with replayability. Even after completion there's a few features to be added. Some I've already done, like the two-player mode, and some that will be an interesting challenge to come back to, like the CPU-mode.
 ___
 ## Getting Started
 ___
@@ -23,6 +23,7 @@ ___
 - [x] ~~Dice Animation & Sound Effects~~
 - [ ] Yahtzee Celebration
 - [ ] CPU Mode
+- [ ] Undo Button
 ___
 ## Screenshots
 ___
